@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
-
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { addTest, removeTest } from '../actions/test';
+
+import { PRIMARY_COLOR } from '../config/theme';
+
 import Logo from '../../assets/logo_full.svg';
+import PrimaryButton from '../components/PrimaryButton';
+import SecondaryButton from '../components/SecondaryButton';
 
 const LandingScreen = ({ addTest, removeTest }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Logo />
-        <Image style={styles.logo} source={require('../../assets/logo_full.svg')} />
-      </View>
-      <View style={styles.lineContainer}>
-        <Image style={styles.rect} source={require('../../assets/rect.svg')} />
       </View>
       <View style={styles.controlsContainer}>
-        <Text>controls</Text>
+        <PrimaryButton text='Register' />
+        <SecondaryButton text='Sign in' />
       </View>
     </View>
   );
@@ -32,25 +33,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column',
     backgroundColor: 'white',
   },
   logoContainer: {
-    flexBasis: '30%',
+    flex: 3,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   lineContainer: {
-    flexBasis: '20%',
+    position: 'relative',
+    flex: 1,
+    width: '100%',
   },
   controlsContainer: {
-    flexBasis: '50%',
-  },
-  logo: {
-    width: 146,
-    height: 121,
-  },
-  rect: {
-    width: '100%',
-    height: 115,
+    marginTop: -2,
+    flex: 4,
+    backgroundColor: PRIMARY_COLOR,
   },
 });
 
