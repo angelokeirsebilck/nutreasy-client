@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
 import AppLoading from 'expo-app-loading';
 
-import LandingScreen from './src/screens/LandingScreen';
-
+// Fonts
 import { useFonts } from 'expo-font';
-import { Inter_900Black } from '@expo-google-fonts/inter';
+import { Roboto_700Bold, Roboto_400Regular, Roboto_500Medium } from '@expo-google-fonts/roboto';
+// Screens
+import LandingScreen from './src/screens/LandingScreen';
 
 // Navigation
 import { createAppContainer } from 'react-navigation';
@@ -28,15 +28,16 @@ const navigator = createStackNavigator(
 const App = createAppContainer(navigator);
 
 export default () => {
-  console.log(fontsLoaded);
   let [fontsLoaded] = useFonts({
-    Inter_900Black,
+    Roboto_700Bold,
+    Roboto_400Regular,
+    Roboto_500Medium,
   });
 
   if (!fontsLoaded) {
     return <AppLoading />;
   }
-  console.log(fontsLoaded);
+
   return (
     <Provider store={store}>
       <App style={styles.container} />

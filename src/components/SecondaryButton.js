@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 24,
     color: SECONDARY_COLOR,
-    fontFamily: 'Inter_900Black',
+    fontFamily: 'Roboto_700Bold',
   },
 });
 

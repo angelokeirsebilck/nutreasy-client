@@ -17,16 +17,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    maxWidth: 240,
+    width: 240,
     height: 50,
     borderRadius: 10,
     backgroundColor: 'white',
     paddingVertical: 14,
+    paddingHorizontal: 74,
   },
   textStyle: {
     fontSize: 24,
     color: SECONDARY_COLOR,
-    fontFamily: 'Nunito_400Regular',
+    fontFamily: 'Roboto_700Bold',
   },
 });
 
