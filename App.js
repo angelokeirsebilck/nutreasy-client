@@ -4,9 +4,16 @@ import AppLoading from 'expo-app-loading';
 
 // Fonts
 import { useFonts } from 'expo-font';
-import { Roboto_700Bold, Roboto_400Regular, Roboto_500Medium } from '@expo-google-fonts/roboto';
+import {
+  Roboto_700Bold,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_300Light_Italic,
+} from '@expo-google-fonts/roboto';
+
 // Screens
 import LandingScreen from './src/screens/LandingScreen';
+import LoginScreen from './src/screens/LoginScreen';
 
 // Navigation
 import { createAppContainer } from 'react-navigation';
@@ -19,6 +26,7 @@ import store from './store';
 const navigator = createStackNavigator(
   {
     Landing: LandingScreen,
+    Login: LoginScreen,
   },
   {
     initialRouteName: 'Landing',
@@ -32,6 +40,7 @@ export default () => {
     Roboto_700Bold,
     Roboto_400Regular,
     Roboto_500Medium,
+    Roboto_300Light_Italic,
   });
 
   if (!fontsLoaded) {
