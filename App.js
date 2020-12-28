@@ -14,6 +14,7 @@ import {
 // Screens
 import LandingScreen from './src/screens/LandingScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import HomeScreen from './src/screens/HomeScreen';
 
 // Navigation
 import { createAppContainer } from 'react-navigation';
@@ -27,6 +28,7 @@ const navigator = createStackNavigator(
   {
     Landing: LandingScreen,
     Login: LoginScreen,
+    Home: HomeScreen,
   },
   {
     initialRouteName: 'Landing',

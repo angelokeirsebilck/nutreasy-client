@@ -1,13 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import { PRIMARY_COLOR } from '../config/theme';
 
 import Logo from '../../assets/logo_full.svg';
 import PrimaryButton from '../components/PrimaryButton';
+import { loadUser } from '../actions/auth';
 
-const LandingScreen = ({ navigation }) => {
+const LandingScreen = ({ navigation, auth, loadUser }) => {
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  if (auth.isAuthenticated) {
+    navigation.navigate('Home');
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -74,4 +83,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, {})(LandingScreen);
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { loadUser })(LandingScreen);

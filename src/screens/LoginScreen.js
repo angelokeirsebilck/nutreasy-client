@@ -1,25 +1,47 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-
-import { PRIMARY_COLOR } from '../config/theme';
-
-import Logo from '../../assets/logo_full.svg';
-import PrimaryButton from '../components/PrimaryButton';
 import { TextInput } from 'react-native-gesture-handler';
 
-const LoginScreen = ({ navigation }) => {
+import { PRIMARY_COLOR } from '../config/theme';
+import Logo from '../../assets/logo_full.svg';
+import PrimaryButton from '../components/PrimaryButton';
+import { loginUser, register } from '../actions/auth';
+
+const LoginScreen = ({ navigation, loginUser, register, auth }) => {
+  if (auth.isAuthenticated) {
+    navigation.navigate('Home');
+  }
+
   const login = navigation.getParam('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const button = login ? <PrimaryButton text='Sign in' /> : <PrimaryButton text='Register' />;
+  const button = login ? (
+    <TouchableOpacity onPress={() => loginUser(email, password)}>
+      <PrimaryButton text='Sign in' />
+    </TouchableOpacity>
+  ) : (
+    <TouchableOpacity onPress={() => register(email, password)}>
+      <PrimaryButton text='Register' />
+    </TouchableOpacity>
+  );
   const bottomLink = login ? (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Login', {
+          login: false,
+        })
+      }>
       <Text style={styles.bottomTextStyle}> Didn’t register yet? Register. </Text>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Login', {
+          login: true,
+        })
+      }>
       <Text style={styles.bottomTextStyle}>Already registered? Sign in.</Text>
     </TouchableOpacity>
   );
@@ -126,4 +148,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {})(LoginScreen);
+export default connect(mapStateToProps, { loginUser, register })(LoginScreen);
