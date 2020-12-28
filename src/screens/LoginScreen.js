@@ -6,9 +6,10 @@ import { TextInput } from 'react-native-gesture-handler';
 import { PRIMARY_COLOR } from '../config/theme';
 import Logo from '../../assets/logo_full.svg';
 import PrimaryButton from '../components/PrimaryButton';
+import Alert from './../components/Alert';
 import { loginUser, register } from '../actions/auth';
 
-const LoginScreen = ({ navigation, loginUser, register, auth }) => {
+const LoginScreen = ({ navigation, loginUser, register, auth, alert }) => {
   if (auth.isAuthenticated) {
     navigation.navigate('Home');
   }
@@ -48,6 +49,7 @@ const LoginScreen = ({ navigation, loginUser, register, auth }) => {
 
   return (
     <View style={styles.container}>
+      <Alert />
       <View style={styles.logoContainer}>
         <Logo />
       </View>
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     backgroundColor: 'white',
+    position: 'relative',
   },
   logoContainer: {
     flex: 3,
@@ -146,6 +149,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  alert: state.alert,
 });
 
 export default connect(mapStateToProps, { loginUser, register })(LoginScreen);

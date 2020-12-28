@@ -3,6 +3,7 @@ import { API_URL } from '../config/settings';
 import { LOGIN_SUCCES, USER_LOADED, LOGOUT, REGISTER_FAIL, REGISTER_SUCCES } from './types';
 import { AsyncStorage } from 'react-native';
 import setAuthToken from '../utils/setAuthToken';
+import { setAlert } from './alert';
 
 export const loadUser = () => async (dispatch) => {
   try {
@@ -42,7 +43,7 @@ export const register = (email, password) => async (dispatch) => {
     const errors = error.response.data.errors;
     if (errors) {
       errors.forEach((error) => {
-        console.log(error.msg);
+        dispatch(setAlert(error.msg, 'danger'));
       });
     }
     dispatch({
@@ -72,7 +73,7 @@ export const loginUser = (email, password) => async (dispatch) => {
     const errors = error.response.data.errors;
     if (errors) {
       errors.forEach((error) => {
-        console.log(error.msg);
+        dispatch(setAlert(error.msg, 'danger'));
       });
     }
   }
