@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { PRIMARY_COLOR } from '../config/theme';
 import { logout } from '../actions/auth';
 
+import { FontAwesome } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+
 const HomeScreen = ({ logout, auth, navigation }) => {
   if (!auth.isAuthenticated) {
     navigation.navigate('Landing');
@@ -16,7 +19,9 @@ const HomeScreen = ({ logout, auth, navigation }) => {
   return (
     <View>
       <Text>Home Screen</Text>
-      <Button title='Logout' onPress={logout}></Button>
+      <Button title='Logout' onPress={() => logout()}></Button>
+      <FontAwesome name='user' size={24} color='black' />
+      <Entypo name='users' size={24} color='black' />
     </View>
   );
 };

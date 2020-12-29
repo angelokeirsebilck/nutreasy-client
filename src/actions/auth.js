@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
+
 import { API_URL } from '../config/settings';
 import { LOGIN_SUCCES, USER_LOADED, LOGOUT, REGISTER_FAIL, REGISTER_SUCCES } from './types';
-import { AsyncStorage } from 'react-native';
 import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
 
@@ -70,6 +71,7 @@ export const loginUser = (email, password) => async (dispatch) => {
       payload: res.data.token,
     });
   } catch (error) {
+    console.log(error);
     const errors = error.response.data.errors;
     if (errors) {
       errors.forEach((error) => {
@@ -79,7 +81,7 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 };
 
-// Logout User / Clear Profile
+// Logout User
 export const logout = () => async (dispatch) => {
   await AsyncStorage.removeItem('token');
   dispatch({

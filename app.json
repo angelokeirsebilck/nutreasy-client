@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "./assets/*"
-    ],
+    "assetBundlePatterns": ["./assets/*"],
     "ios": {
       "bundleIdentifier": "com.angelok.nutreasy",
       "buildNumber": "1.0.0",

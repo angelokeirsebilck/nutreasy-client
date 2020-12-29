@@ -3,7 +3,6 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import { PRIMARY_COLOR } from '../config/theme';
-
 import Logo from '../../assets/logo_full.svg';
 import PrimaryButton from '../components/PrimaryButton';
 import { loadUser } from '../actions/auth';
@@ -11,7 +10,7 @@ import { loadUser } from '../actions/auth';
 const LandingScreen = ({ navigation, auth, loadUser }) => {
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [loadUser]);
 
   if (auth.isAuthenticated) {
     navigation.navigate('Home');

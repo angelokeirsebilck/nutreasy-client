@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { PRIMARY_COLOR, RED } from '../config/theme';
+import { RED } from '../config/theme';
+
 const Alert = ({ alert }) => {
   const errors =
     alert.length > 0 ? (
