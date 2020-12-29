@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { SECONDARY_COLOR } from '../config/theme';
+import { PRIMARY_COLOR } from '../config/theme';
 
 const SecondaryButton = ({ text }) => {
   return (
@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
     maxWidth: 240,
     height: 50,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: PRIMARY_COLOR,
     paddingVertical: 14,
   },
   textStyle: {
     fontSize: 24,
-    color: SECONDARY_COLOR,
+    color: 'white',
     fontFamily: 'Roboto_700Bold',
   },
 });

@@ -5,10 +5,7 @@ import { connect } from 'react-redux';
 import { PRIMARY_COLOR } from '../config/theme';
 import { logout } from '../actions/auth';
 
-import { FontAwesome } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-
-const HomeScreen = ({ logout, auth, navigation }) => {
+const HomeScreen = ({ auth, navigation }) => {
   if (!auth.isAuthenticated) {
     navigation.navigate('Landing');
   }
@@ -16,17 +13,19 @@ const HomeScreen = ({ logout, auth, navigation }) => {
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => true);
   }, []);
+
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Home Screen</Text>
-      <Button title='Logout' onPress={() => logout()}></Button>
-      <FontAwesome name='user' size={24} color='black' />
-      <Entypo name='users' size={24} color='black' />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+  },
+});
 
 const mapStateToProps = (state) => ({
   auth: state.auth,

@@ -2,9 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppLoading from 'expo-app-loading';
 
-//Icons
+// Icons
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+
+// Colors
+import { BLUE_DARK, PRIMARY_COLOR } from './src/config/theme';
 
 // Fonts
 import { useFonts } from 'expo-font';
@@ -44,12 +47,6 @@ const HomeStack = createBottomTabNavigator(
   {
     Home: {
       screen: HomeScreen,
-      navigationOptions: {
-        tabBarLabel: null,
-        tabBarIcon: ({ tintColor }) => {
-          <Entypo name='home' size={24} color={tintColor} />;
-        },
-      },
     },
     Profile: ProfileScreen,
   },
@@ -59,15 +56,20 @@ const HomeStack = createBottomTabNavigator(
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
         if (routeName === 'Home') {
-          <Entypo name='home' size={24} color={tintColor} />;
+          return <Entypo name='home' size={24} color={tintColor} />;
         } else if (routeName === 'Profile') {
-          <FontAwesome name='user' size={24} color={tintColor} />;
+          return <FontAwesome name='user' size={24} color={tintColor} />;
         }
       },
     }),
     tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
+      activeTintColor: BLUE_DARK,
+      inactiveTintColor: 'white',
+      showIcon: true,
+      showLabel: false,
+      style: {
+        backgroundColor: PRIMARY_COLOR,
+      },
     },
   }
 );
