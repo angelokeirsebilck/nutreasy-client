@@ -12,3 +12,6 @@ export const REMOVE_ALERT = 'REMOVE_ALERT';
 // Profile
 export const LOAD_PROFILE = 'LOAD_PROFILE';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
+export const SET_PROFILE = 'SET_PROFILE';
+export const ADD_ERROR = 'ADD_ERROR';
+export const REMOVE_ERROR = 'REMOVE_ERROR';

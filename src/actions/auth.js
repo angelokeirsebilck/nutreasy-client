@@ -12,6 +12,8 @@ import {
 import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
 import { loadProfile } from './profile';
+
+// Navigation
 import NavigationService from '../../NavigationService';
 
 export const loadUser = (navigation = null) => async (dispatch) => {
@@ -81,8 +83,10 @@ export const loginUser = (email, password) => async (dispatch) => {
       type: LOGIN_SUCCES,
       payload: res.data.token,
     });
+
     dispatch(loadUser());
     dispatch(loadProfile());
+
     NavigationService.navigate('Home');
   } catch (error) {
     console.log(error);
