@@ -10,20 +10,15 @@ import Alert from './../components/Alert';
 import { loginUser, register } from '../actions/auth';
 
 const LoginScreen = ({ navigation, loginUser, register, auth, alert }) => {
-  if (auth.isAuthenticated) {
-    navigation.navigate('Home');
-  }
-
   const login = navigation.getParam('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const button = login ? (
-    <TouchableOpacity onPress={() => loginUser(email, password)}>
+    <TouchableOpacity onPress={() => loginUser(email, password, navigation)}>
       <PrimaryButton text='Sign in' />
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity onPress={() => register(email, password)}>
+    <TouchableOpacity onPress={() => register(email, password, navigation)}>
       <PrimaryButton text='Register' />
     </TouchableOpacity>
   );
@@ -126,6 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontFamily: 'Roboto_400Regular',
     marginBottom: 30,
+    fontSize: 16,
   },
   placeholderStyle: {
     display: 'flex',
@@ -139,6 +135,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontFamily: 'Roboto_300Light_Italic',
     marginBottom: 30,
+    fontSize: 16,
   },
   bottomTextStyle: {
     fontFamily: 'Roboto_400Regular',

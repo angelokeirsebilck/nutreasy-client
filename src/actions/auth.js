@@ -1,12 +1,20 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-
 import { API_URL } from '../config/settings';
-import { LOGIN_SUCCES, USER_LOADED, LOGOUT, REGISTER_FAIL, REGISTER_SUCCES } from './types';
+import {
+  LOGIN_SUCCES,
+  USER_LOADED,
+  LOGOUT,
+  REGISTER_FAIL,
+  REGISTER_SUCCES,
+  CLEAR_PROFILE,
+} from './types';
 import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
+import { loadProfile } from './profile';
+import NavigationService from '../../NavigationService';
 
-export const loadUser = () => async (dispatch) => {
+export const loadUser = (navigation = null) => async (dispatch) => {
   try {
     const token = await AsyncStorage.getItem('token');
     setAuthToken(token);
@@ -15,6 +23,8 @@ export const loadUser = () => async (dispatch) => {
       type: USER_LOADED,
       payload: res.data,
     });
+    if (navigation != null) navigation.navigate('Home');
+    dispatch(loadProfile());
   } catch (error) {
     console.log(error);
   }
@@ -40,6 +50,7 @@ export const register = (email, password) => async (dispatch) => {
       payload: res.data.token,
     });
     dispatch(loadUser());
+    NavigationService.navigate('Home');
   } catch (error) {
     const errors = error.response.data.errors;
     if (errors) {
@@ -65,11 +76,14 @@ export const loginUser = (email, password) => async (dispatch) => {
   };
   try {
     const res = await axios.post(`${API_URL}/api/auth`, body, config);
-
+    await AsyncStorage.setItem('token', res.data.token);
     dispatch({
       type: LOGIN_SUCCES,
       payload: res.data.token,
     });
+    dispatch(loadUser());
+    dispatch(loadProfile());
+    NavigationService.navigate('Home');
   } catch (error) {
     console.log(error);
     const errors = error.response.data.errors;
@@ -86,5 +100,8 @@ export const logout = () => async (dispatch) => {
   await AsyncStorage.removeItem('token');
   dispatch({
     type: LOGOUT,
+  });
+  dispatch({
+    type: CLEAR_PROFILE,
   });
 };

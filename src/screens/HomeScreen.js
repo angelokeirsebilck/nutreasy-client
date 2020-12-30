@@ -6,17 +6,16 @@ import { PRIMARY_COLOR } from '../config/theme';
 import { logout } from '../actions/auth';
 
 const HomeScreen = ({ auth, navigation }) => {
-  if (!auth.isAuthenticated) {
-    navigation.navigate('Landing');
-  }
-
   useEffect(() => {
+    if (!auth.isAuthenticated) {
+      navigation.navigate('Landing');
+    }
     BackHandler.addEventListener('hardwareBackPress', () => true);
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text style={styles.title}>Nutreasy</Text>
     </View>
   );
 };
@@ -24,6 +23,13 @@ const HomeScreen = ({ auth, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 50,
+  },
+  title: {
+    fontSize: 32,
+    fontFamily: 'Roboto_700Bold',
+    textAlign: 'center',
+    color: PRIMARY_COLOR,
+    marginBottom: 20,
   },
 });
 

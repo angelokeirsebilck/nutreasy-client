@@ -28,6 +28,7 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import NavigationService from './NavigationService';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -100,8 +101,12 @@ export default () => {
 
   return (
     <Provider store={store}>
-      <View></View>
-      <App style={styles.container} />
+      <App
+        style={styles.container}
+        ref={(navigatorRef) => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
     </Provider>
   );
 };

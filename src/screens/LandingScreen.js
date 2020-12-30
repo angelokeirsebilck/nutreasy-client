@@ -9,12 +9,8 @@ import { loadUser } from '../actions/auth';
 
 const LandingScreen = ({ navigation, auth, loadUser }) => {
   useEffect(() => {
-    loadUser();
-  }, [loadUser]);
-
-  if (auth.isAuthenticated) {
-    navigation.navigate('Home');
-  }
+    loadUser(navigation);
+  }, []);
 
   return (
     <View style={styles.container}>
