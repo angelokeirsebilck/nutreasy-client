@@ -15,3 +15,4 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const SET_PROFILE = 'SET_PROFILE';
 export const ADD_ERROR = 'ADD_ERROR';
 export const REMOVE_ERROR = 'REMOVE_ERROR';
+export const SET_BMR = 'SET_BMR';

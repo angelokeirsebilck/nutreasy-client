@@ -30,6 +30,7 @@ const ProfileScreen = ({
   const [weight, setWeight] = useState(initalValues.weight);
   const [age, setAge] = useState(initalValues.age);
   const [height, setHeight] = useState(initalValues.height);
+  const [activityLevel, setActivityLevel] = useState(initalValues.activityLevel);
 
   const saveProfile = () => {
     const data = {
@@ -37,7 +38,7 @@ const ProfileScreen = ({
       age: parseInt(age),
       weight: parseFloat(weight),
       height: parseFloat(height),
-      activityLevel: parseFloat(1.4),
+      activityLevel: parseFloat(activityLevel),
     };
     createProfile(data);
   };
@@ -58,6 +59,8 @@ const ProfileScreen = ({
         setHeightUnit={setHeightUnit}
         weightUnit={weightUnit}
         setWeightUnit={setWeightUnit}
+        activityLevel={activityLevel}
+        setActivityLevel={setActivityLevel}
       />
       <TouchableOpacity
         style={[styles.btnContainer, { marginBottom: 20 }]}
@@ -104,7 +107,7 @@ ProfileScreen.defaultProps = {
     gender: 'male',
     height: 170,
     weight: 80,
-    activityLevel: 1.4,
+    activityLevel: 1.2,
     age: 20,
   },
 };

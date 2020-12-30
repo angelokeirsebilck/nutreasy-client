@@ -4,11 +4,13 @@ import {
   SET_PROFILE,
   ADD_ERROR,
   REMOVE_ERROR,
+  SET_BMR,
 } from '../actions/types';
 
 const initialState = {
   profile: null,
   errors: [],
+  BMR: null,
 };
 
 export default function (state = initialState, action) {
@@ -24,6 +26,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         profile: null,
+        BMR: null,
+        errors: [],
       };
     case ADD_ERROR:
       let newArray = [
@@ -33,7 +37,6 @@ export default function (state = initialState, action) {
           msg: action.payload.msg,
         },
       ];
-
       return {
         ...state,
         errors: newArray,
@@ -43,6 +46,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         errors: removed,
+      };
+    case SET_BMR:
+      return {
+        ...state,
+        BMR: payload,
       };
 
     default:

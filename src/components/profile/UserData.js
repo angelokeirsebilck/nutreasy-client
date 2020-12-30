@@ -32,15 +32,16 @@ const UserData = ({
   setHeightUnit,
   weightUnit,
   setWeightUnit,
+  activityLevel,
+  setActivityLevel,
 }) => {
-  //   const [errors, setErrors] = useState([]);
-
   useEffect(() => {
     if (profile != null) {
       setAge(profile.age);
       setWeight(profile.weight);
       setHeight(profile.height);
       setGender(profile.gender);
+      setActivityLevel(profile.activityLevel);
     }
   }, []);
 
@@ -76,22 +77,6 @@ const UserData = ({
   };
 
   const validateAge = (val) => {
-    // if (val.length <= 0) {
-    //   const newArray = errors;
-    //   const errorExist = newArray.find((e) => e.field == 'age');
-    //   ageError = <Text style={styles.errorStyle}>Age is required and must be greater then 0.</Text>;
-    //   if (errorExist) return;
-    //   newArray.push({
-    //     field: 'age',
-    //     msg: 'Age is required and must be greater then 0.',
-    //   });
-
-    //   setErrors(newArray);
-    // } else {
-    //   const newArray = errors.filter((e) => e.field !== 'age');
-    //   setErrors(newArray);
-    //   ageError = null;
-    // }
     if (val.length <= 0) {
       addError('age', 'Age is required and must be greater then 0.');
       weightError = (
@@ -104,24 +89,6 @@ const UserData = ({
   };
 
   const validateHeight = (val) => {
-    // if (val.length <= 0) {
-    //   const newArray = errors;
-    //   const errorExist = newArray.find((e) => e.field == 'height');
-    //   heightError = (
-    //     <Text style={styles.errorStyle}>Height is required and must be greater then 0.</Text>
-    //   );
-    //   if (errorExist) return;
-    //   newArray.push({
-    //     field: 'height',
-    //     msg: 'Height is required and must be greater then 0.',
-    //   });
-
-    //   setErrors(newArray);
-    // } else {
-    //   const newArray = errors.filter((e) => e.field !== 'height');
-    //   setErrors(newArray);
-    //   heightError = null;
-    // }
     if (val.length <= 0) {
       addError('height', 'Weight is required and must be greater then 0.');
       weightError = (
@@ -213,7 +180,7 @@ const UserData = ({
         </View>
       </View>
       {heightError}
-      <View style={[styles.groupFields, { marginBottom: 0 }]}>
+      <View style={styles.groupFields}>
         <Text style={styles.groupFieldName}>Weight </Text>
         <TextInput
           keyboardType='numeric'
@@ -260,6 +227,27 @@ const UserData = ({
         </View>
       </View>
       {weightError}
+      <View style={[styles.groupFields, { marginBottom: 0 }]}>
+        <Text style={styles.groupFieldName}>Activity Level </Text>
+        <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 4 }]}>
+          <Picker
+            style={{
+              width: '100%',
+              height: '100%',
+              fontFamily: 'Roboto_400Regular',
+              color: PRIMARY_COLOR,
+            }}
+            selectedValue={activityLevel.toString()}
+            onValueChange={(itemValue, itemIndex) => setActivityLevel(itemValue)}>
+            <Picker.Item label='Little or no exercise' value='1.2' />
+            <Picker.Item label='1-2 days/week' value='1.4' />
+            <Picker.Item label='2-3 days/week' value='1.6' />
+            <Picker.Item label='4-5 days/week' value='1.75' />
+            <Picker.Item label='6-7 days/week' value='2' />
+            <Picker.Item label='Professional athlete' value='2.3' />
+          </Picker>
+        </View>
+      </View>
     </View>
   );
 };

@@ -1,9 +1,12 @@
-import { LOAD_PROFILE, SET_PROFILE, ADD_ERROR, REMOVE_ERROR } from './types';
+import { LOAD_PROFILE, SET_PROFILE, ADD_ERROR, REMOVE_ERROR, SET_BMR } from './types';
 import axios from 'axios';
 import { API_URL } from '../config/settings';
 
 // Navigation
 import NavigationService from '../../NavigationService';
+
+// Utils
+import calcBMR from '../utils/BMRCalculator';
 
 export const loadProfile = () => async (dispatch) => {
   try {
@@ -12,6 +15,7 @@ export const loadProfile = () => async (dispatch) => {
       type: LOAD_PROFILE,
       payload: res.data,
     });
+    dispatch(setBmr(res.data.age, res.data.weight, res.data.height, res.data.gender));
   } catch (error) {
     console.log(error);
   }
@@ -54,5 +58,14 @@ export const removeError = (field, msg) => async (dispatch) => {
   dispatch({
     type: REMOVE_ERROR,
     payload: field,
+  });
+};
+
+// Set BMR
+export const setBmr = (age, weight, height, gender) => (dispatch) => {
+  const BMR = calcBMR(age, weight, height, gender);
+  dispatch({
+    type: SET_BMR,
+    payload: BMR,
   });
 };
