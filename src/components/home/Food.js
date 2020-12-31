@@ -8,7 +8,7 @@ import { PRIMARY_COLOR } from '../../config/theme';
 // Icons
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const Food = ({ BMR }) => {
+const Food = ({ calories }) => {
   return (
     <View style={styles.groupContainer}>
       <View style={styles.subTitleContainer}>
@@ -16,7 +16,7 @@ const Food = ({ BMR }) => {
         <Text style={styles.subTitle}>Food</Text>
       </View>
       <View style={styles.groupFields}>
-        <Text style={styles.groupFieldName}>{BMR} </Text>
+        <Text style={styles.groupFieldName}>{calories} </Text>
       </View>
     </View>
   );

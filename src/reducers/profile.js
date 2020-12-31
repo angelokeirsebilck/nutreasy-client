@@ -5,12 +5,14 @@ import {
   ADD_ERROR,
   REMOVE_ERROR,
   SET_BMR,
+  SET_CALORIES,
 } from '../actions/types';
 
 const initialState = {
   profile: null,
   errors: [],
   BMR: null,
+  calories: null,
 };
 
 export default function (state = initialState, action) {
@@ -27,6 +29,7 @@ export default function (state = initialState, action) {
         ...state,
         profile: null,
         BMR: null,
+        calories: null,
         errors: [],
       };
     case ADD_ERROR:
@@ -52,7 +55,12 @@ export default function (state = initialState, action) {
         ...state,
         BMR: payload,
       };
-
+    case SET_CALORIES:
+      let calories = state.BMR * payload;
+      return {
+        ...state,
+        calories,
+      };
     default:
       return state;
   }

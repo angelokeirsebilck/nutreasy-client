@@ -79,24 +79,22 @@ const UserData = ({
   const validateAge = (val) => {
     if (val.length <= 0) {
       addError('age', 'Age is required and must be greater then 0.');
-      weightError = (
-        <Text style={styles.errorStyle}>Age is required and must be greater then 0.</Text>
-      );
+      ageError = <Text style={styles.errorStyle}>Age is required and must be greater then 0.</Text>;
     } else {
       removeError('age');
-      weightError = null;
+      ageError = null;
     }
   };
 
   const validateHeight = (val) => {
     if (val.length <= 0) {
-      addError('height', 'Weight is required and must be greater then 0.');
-      weightError = (
+      addError('height', 'Height is required and must be greater then 0.');
+      heightError = (
         <Text style={styles.errorStyle}>Height is required and must be greater then 0.</Text>
       );
     } else {
       removeError('height');
-      weightError = null;
+      heightError = null;
     }
   };
 
@@ -108,7 +106,7 @@ const UserData = ({
       </View>
       <View style={styles.groupFields}>
         <Text style={styles.groupFieldName}>Gender </Text>
-        <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 4 }]}>
+        <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
           <Picker
             style={{
               width: '100%',
@@ -229,7 +227,7 @@ const UserData = ({
       {weightError}
       <View style={[styles.groupFields, { marginBottom: 0 }]}>
         <Text style={styles.groupFieldName}>Activity Level </Text>
-        <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 4 }]}>
+        <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
           <Picker
             style={{
               width: '100%',
@@ -300,7 +298,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     backgroundColor: 'white',
     color: PRIMARY_COLOR,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     fontFamily: 'Roboto_400Regular',
   },
   errorStyle: {

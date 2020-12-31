@@ -1,4 +1,4 @@
-import { LOAD_PROFILE, SET_PROFILE, ADD_ERROR, REMOVE_ERROR, SET_BMR } from './types';
+import { LOAD_PROFILE, SET_PROFILE, ADD_ERROR, REMOVE_ERROR, SET_BMR, SET_CALORIES } from './types';
 import axios from 'axios';
 import { API_URL } from '../config/settings';
 
@@ -15,7 +15,15 @@ export const loadProfile = () => async (dispatch) => {
       type: LOAD_PROFILE,
       payload: res.data,
     });
-    dispatch(setBmr(res.data.age, res.data.weight, res.data.height, res.data.gender));
+    dispatch(
+      setBmr(
+        res.data.age,
+        res.data.weight,
+        res.data.height,
+        res.data.gender,
+        res.data.activityLevel
+      )
+    );
   } catch (error) {
     console.log(error);
   }
@@ -42,7 +50,6 @@ export const createProfile = (data) => async (dispatch) => {
   }
 };
 
-// Add Error
 export const addError = (field, msg) => async (dispatch) => {
   dispatch({
     type: ADD_ERROR,
@@ -53,7 +60,6 @@ export const addError = (field, msg) => async (dispatch) => {
   });
 };
 
-// Remove Error
 export const removeError = (field, msg) => async (dispatch) => {
   dispatch({
     type: REMOVE_ERROR,
@@ -61,11 +67,18 @@ export const removeError = (field, msg) => async (dispatch) => {
   });
 };
 
-// Set BMR
-export const setBmr = (age, weight, height, gender) => (dispatch) => {
+export const setBmr = (age, weight, height, gender, activityLevel) => (dispatch) => {
   const BMR = calcBMR(age, weight, height, gender);
   dispatch({
     type: SET_BMR,
     payload: BMR,
+  });
+  dispatch(setCalories(activityLevel));
+};
+
+export const setCalories = (activityLevel) => (dispatch) => {
+  dispatch({
+    type: SET_CALORIES,
+    payload: activityLevel,
   });
 };

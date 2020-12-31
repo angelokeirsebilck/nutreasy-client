@@ -9,7 +9,7 @@ import Food from '../components/home/Food';
 
 import { withNavigation } from 'react-navigation';
 
-const HomeScreen = ({ auth, navigation, profile, BMR, setBmr, loadProfile }) => {
+const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
   useEffect(() => {
     if (!auth.isAuthenticated) {
       navigation.navigate('Landing');
@@ -35,7 +35,7 @@ const HomeScreen = ({ auth, navigation, profile, BMR, setBmr, loadProfile }) => 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nutreasy</Text>
-      {BMR !== null ? <Food BMR={BMR} /> : null}
+      {calories !== null ? <Food calories={calories} /> : null}
     </View>
   );
 };
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
   profile: state.profile.profile,
-  BMR: state.profile.BMR,
+  calories: state.profile.calories,
 });
 
 HomeScreen.navigationOptions = () => {
