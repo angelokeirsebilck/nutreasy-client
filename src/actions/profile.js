@@ -21,7 +21,9 @@ export const loadProfile = () => async (dispatch) => {
         res.data.weight,
         res.data.height,
         res.data.gender,
-        res.data.activityLevel
+        res.data.activityLevel,
+        res.data.weightUnit,
+        res.data.heightUnit
       )
     );
   } catch (error) {
@@ -67,8 +69,10 @@ export const removeError = (field, msg) => async (dispatch) => {
   });
 };
 
-export const setBmr = (age, weight, height, gender, activityLevel) => (dispatch) => {
-  const BMR = calcBMR(age, weight, height, gender);
+export const setBmr = (age, weight, height, gender, activityLevel, weightUnit, heightUnit) => (
+  dispatch
+) => {
+  const BMR = calcBMR(age, weight, height, gender, weightUnit, heightUnit);
   dispatch({
     type: SET_BMR,
     payload: BMR,

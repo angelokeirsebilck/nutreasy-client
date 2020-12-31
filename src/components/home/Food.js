@@ -16,7 +16,7 @@ const Food = ({ calories }) => {
         <Text style={styles.subTitle}>Food</Text>
       </View>
       <View style={styles.groupFields}>
-        <Text style={styles.groupFieldName}>{calories} </Text>
+        <Text style={styles.groupFieldName}>0 / {calories} kcal</Text>
       </View>
     </View>
   );

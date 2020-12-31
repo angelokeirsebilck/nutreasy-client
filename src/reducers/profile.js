@@ -56,7 +56,7 @@ export default function (state = initialState, action) {
         BMR: payload,
       };
     case SET_CALORIES:
-      let calories = state.BMR * payload;
+      let calories = parseFloat((state.BMR * payload).toFixed(1));
       return {
         ...state,
         calories,

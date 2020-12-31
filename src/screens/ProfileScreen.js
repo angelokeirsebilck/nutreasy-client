@@ -24,9 +24,9 @@ const ProfileScreen = ({
     BackHandler.addEventListener('hardwareBackPress', () => true);
   }, []);
 
-  const [gender, setGender] = useState('Male');
-  const [heightUnit, setHeightUnit] = useState('cm');
-  const [weightUnit, setWeightUnit] = useState('kg');
+  const [gender, setGender] = useState(initalValues.gender);
+  const [heightUnit, setHeightUnit] = useState(initalValues.heightUnit);
+  const [weightUnit, setWeightUnit] = useState(initalValues.weightUnit);
   const [weight, setWeight] = useState(initalValues.weight);
   const [age, setAge] = useState(initalValues.age);
   const [height, setHeight] = useState(initalValues.height);
@@ -34,12 +34,16 @@ const ProfileScreen = ({
 
   const saveProfile = () => {
     const data = {
-      gender: gender,
+      gender,
       age: parseInt(age),
       weight: parseFloat(weight),
       height: parseFloat(height),
       activityLevel: parseFloat(activityLevel),
+      heightUnit,
+      weightUnit,
     };
+
+    // Create or Update Profile
     createProfile(data);
   };
 
@@ -109,6 +113,8 @@ ProfileScreen.defaultProps = {
     weight: 80,
     activityLevel: 1.2,
     age: 20,
+    heightUnit: 'cm',
+    weightUnit: 'kg',
   },
 };
 
