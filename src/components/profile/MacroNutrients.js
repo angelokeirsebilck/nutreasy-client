@@ -54,9 +54,9 @@ const MacroNutrients = ({
       case 'muscleGain':
         setShowCustom(false);
         macroNutrientsValues = {
-          carbs: 50,
-          protein: 25,
-          fat: 25,
+          carbs: 30,
+          protein: 40,
+          fat: 30,
         };
         break;
       case 'weightLoss':

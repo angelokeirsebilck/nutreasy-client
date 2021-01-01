@@ -36,7 +36,6 @@ const CustomMacroNutrients = ({
       removeError('carbs');
       validateSum();
       carbsError = null;
-      v;
       setMacroNutrientsValues();
     }
   };

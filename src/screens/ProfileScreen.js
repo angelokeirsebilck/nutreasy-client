@@ -94,7 +94,7 @@ const ProfileScreen = ({
         <SecondaryButton text='Save' disabled={errors.length > 0 ? true : false} />
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.btnContainer}
+        style={[styles.btnContainer, { marginBottom: 20 }]}
         onPress={() => {
           logout();
           navigation.navigate('Landing');

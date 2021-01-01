@@ -22,7 +22,7 @@ const Goals = ({ profile: { profile }, weightGoal, setWeightGoal }) => {
         <FontAwesome name='check-square' style={styles.subTitleIcon} />
         <Text style={styles.subTitle}>Goals</Text>
       </View>
-      <View style={styles.groupFields}>
+      <View style={[styles.groupFields, { marginBottom: 0 }]}>
         <Text style={styles.groupFieldName}>Weight </Text>
         <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
           <Picker
