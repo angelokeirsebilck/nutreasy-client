@@ -8,7 +8,6 @@ import { setBmr, loadProfile } from '../actions/profile';
 import Food from '../components/home/Food';
 
 import { withNavigation } from 'react-navigation';
-import Steps from '../components/home/Steps';
 
 const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
   useEffect(() => {
@@ -37,7 +36,9 @@ const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Nutreasy</Text>
       {calories !== null ? <Food calories={calories} /> : null}
-      <Steps />
+      {/* 
+      Disabled until pedometer gets fixed in Expo
+      <Steps /> */}
     </View>
   );
 };

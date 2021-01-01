@@ -56,7 +56,21 @@ export default function (state = initialState, action) {
         BMR: payload,
       };
     case SET_CALORIES:
-      let calories = parseFloat((state.BMR * payload).toFixed(1));
+      let calories = parseFloat((state.BMR * payload).toFixed(0));
+      switch (state.profile.goals.weight) {
+        case 'maintain':
+          calories = calories;
+          break;
+        case 'loss':
+          calories = calories - 500;
+          break;
+        case 'gain':
+          calories = calories + 500;
+          break;
+        default:
+          break;
+      }
+
       return {
         ...state,
         calories,

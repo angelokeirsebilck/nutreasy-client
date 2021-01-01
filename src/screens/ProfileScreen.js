@@ -12,6 +12,9 @@ import { createProfile } from '../actions/profile';
 // Components
 import SecondaryButton from '../components/SecondaryButton';
 import UserData from '../components/profile/UserData';
+import Goals from '../components/profile/Goals';
+import { ScrollView } from 'react-native-gesture-handler';
+import MacroNutrients from '../components/profile/MacroNutrients';
 
 const ProfileScreen = ({
   createProfile,
@@ -24,6 +27,7 @@ const ProfileScreen = ({
     BackHandler.addEventListener('hardwareBackPress', () => true);
   }, []);
 
+  // UserData fields
   const [gender, setGender] = useState(initalValues.gender);
   const [heightUnit, setHeightUnit] = useState(initalValues.heightUnit);
   const [weightUnit, setWeightUnit] = useState(initalValues.weightUnit);
@@ -31,6 +35,13 @@ const ProfileScreen = ({
   const [age, setAge] = useState(initalValues.age);
   const [height, setHeight] = useState(initalValues.height);
   const [activityLevel, setActivityLevel] = useState(initalValues.activityLevel);
+
+  // Goals fields
+  const [weightGoal, setWeightGoal] = useState(initalValues.weightGoal);
+
+  // MacroNutrient fields
+  const [dietPlan, setDietPlan] = useState(initalValues.dietplan);
+  const [macroNutrients, setMacroNutriens] = useState(initalValues.macroNutrients);
 
   const saveProfile = () => {
     const data = {
@@ -41,6 +52,9 @@ const ProfileScreen = ({
       activityLevel: parseFloat(activityLevel),
       heightUnit,
       weightUnit,
+      weightGoal,
+      dietPlan,
+      macroNutrients,
     };
 
     // Create or Update Profile
@@ -48,7 +62,7 @@ const ProfileScreen = ({
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.title}>Profile</Text>
       <UserData
         weight={weight}
@@ -66,6 +80,13 @@ const ProfileScreen = ({
         activityLevel={activityLevel}
         setActivityLevel={setActivityLevel}
       />
+      <Goals weightGoal={weightGoal} setWeightGoal={setWeightGoal} />
+      <MacroNutrients
+        dietPlan={dietPlan}
+        setDietPlan={setDietPlan}
+        macroNutrients={macroNutrients}
+        setMacroNutriens={setMacroNutriens}
+      />
       <TouchableOpacity
         style={[styles.btnContainer, { marginBottom: 20 }]}
         disabled={errors.length > 0 ? true : false}
@@ -80,7 +101,7 @@ const ProfileScreen = ({
         }}>
         <SecondaryButton text='Log out' />
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -115,6 +136,13 @@ ProfileScreen.defaultProps = {
     age: 20,
     heightUnit: 'cm',
     weightUnit: 'kg',
+    weightGoal: 'maintain',
+    dietplan: 'standard',
+    macroNutrients: {
+      carbs: 50,
+      protein: 25,
+      fat: 25,
+    },
   },
 };
 
