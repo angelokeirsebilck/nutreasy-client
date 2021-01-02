@@ -23,6 +23,8 @@ import LandingScreen from './src/screens/LandingScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import FoodScreen from './src/screens/FoodScreen';
+import TestScreen from './src/screens/TestScreen';
 
 // Navigation
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
@@ -41,6 +43,15 @@ const LandingStack = createStackNavigator(
   },
   {
     initialRouteName: 'Landing',
+  }
+);
+
+const FoodStack = createStackNavigator(
+  {
+    Food: FoodScreen,
+  },
+  {
+    initialRouteName: 'Food',
   }
 );
 
@@ -79,6 +90,7 @@ const switchNavigator = createSwitchNavigator(
   {
     Landing: LandingStack,
     Home: HomeStack,
+    Food: FoodStack,
   },
   {
     initialRouteName: 'Landing',

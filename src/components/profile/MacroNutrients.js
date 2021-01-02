@@ -28,9 +28,9 @@ const MacroNutrients = ({
     if (profile != null) {
       if (profile.macroNutrients != null) setMacroNutriens(profile.macroNutrients);
       if (profile.dietPlan != null) setDietPlan(profile.dietPlan);
-    }
-    if (profile.dietPlan == 'custom') {
-      setShowCustom(true);
+      if (profile.dietPlan == 'custom') {
+        setShowCustom(true);
+      }
     }
   }, []);
 

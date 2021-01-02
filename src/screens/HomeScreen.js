@@ -14,7 +14,7 @@ const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
     if (!auth.isAuthenticated) {
       navigation.navigate('Landing');
     }
-    BackHandler.addEventListener('hardwareBackPress', () => true);
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
 
     // Load profile when homescreen is focus on init.
     const isFocused = navigation.isFocused();
@@ -29,6 +29,7 @@ const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
 
     return () => {
       navFocusListener.remove();
+      backHandler.remove();
     };
   }, []);
 

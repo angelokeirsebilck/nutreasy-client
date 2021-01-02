@@ -24,7 +24,11 @@ const ProfileScreen = ({
   navigation,
 }) => {
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true);
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
+
+    return () => {
+      backHandler.remove();
+    };
   }, []);
 
   // UserData fields

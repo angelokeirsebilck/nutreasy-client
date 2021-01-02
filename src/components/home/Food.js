@@ -1,12 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
 // Colors
-import { PRIMARY_COLOR } from '../../config/theme';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../config/theme';
 
 // Icons
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+
+// Navigation
+import NavigationService from '../../../NavigationService';
 
 const Food = ({
   calories,
@@ -20,6 +24,11 @@ const Food = ({
 
   return (
     <View style={styles.groupContainer}>
+      <TouchableOpacity
+        style={styles.iconPlusContainer}
+        onPress={() => NavigationService.navigate('Food')}>
+        <Entypo name='squared-plus' style={styles.plusIcon} />
+      </TouchableOpacity>
       <View style={styles.subTitleContainer}>
         <MaterialCommunityIcons style={styles.subTitleIcon} name='silverware-fork-knife' />
         <Text style={styles.subTitle}>Food</Text>
@@ -76,6 +85,15 @@ const styles = StyleSheet.create({
     color: PRIMARY_COLOR,
     fontFamily: 'Roboto_400Regular',
     fontSize: 16,
+  },
+  plusIcon: {
+    color: SECONDARY_COLOR,
+    fontSize: 30,
+  },
+  iconPlusContainer: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
   },
 });
 
