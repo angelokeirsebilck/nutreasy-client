@@ -24,7 +24,6 @@ import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import FoodScreen from './src/screens/FoodScreen';
-import TestScreen from './src/screens/TestScreen';
 
 // Navigation
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
