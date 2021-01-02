@@ -1,12 +1,18 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import { StyleSheet, Text, View, BackHandler, Button } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 
+// Colors
 import { PRIMARY_COLOR } from '../config/theme';
+
+// Actions
 import { logout } from '../actions/auth';
 import { setBmr, loadProfile } from '../actions/profile';
+
+// Components
 import Food from '../components/home/Food';
 
+// Navigation
 import { withNavigation } from 'react-navigation';
 
 const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
@@ -64,16 +70,6 @@ const mapStateToProps = (state) => ({
   calories: state.profile.calories,
 });
 
-HomeScreen.navigationOptions = () => {
-  return {
-    title: 'Nutreasy',
-    headerLeft: () => null,
-    headerTitleStyle: {
-      color: PRIMARY_COLOR,
-      fontFamily: 'Roboto_700Bold',
-    },
-  };
-};
 export default withNavigation(
   connect(mapStateToProps, { logout, setBmr, loadProfile })(HomeScreen)
 );

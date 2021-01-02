@@ -47,10 +47,16 @@ const LandingStack = createStackNavigator(
 
 const FoodStack = createStackNavigator(
   {
-    Food: FoodScreen,
+    Food: {
+      screen: FoodScreen,
+    },
   },
   {
     initialRouteName: 'Food',
+    headerMode: 'screen',
+    defaultNavigationOptions: {
+      cardStyle: { backgroundColor: '#FFFFFF' },
+    },
   }
 );
 

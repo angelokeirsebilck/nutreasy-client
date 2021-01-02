@@ -66,52 +66,57 @@ const ProfileScreen = ({
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
-      <UserData
-        weight={weight}
-        setWeight={setWeight}
-        height={height}
-        setHeight={setHeight}
-        age={age}
-        setAge={setAge}
-        gender={gender}
-        setGender={setGender}
-        heightUnit={heightUnit}
-        setHeightUnit={setHeightUnit}
-        weightUnit={weightUnit}
-        setWeightUnit={setWeightUnit}
-        activityLevel={activityLevel}
-        setActivityLevel={setActivityLevel}
-      />
-      <Goals weightGoal={weightGoal} setWeightGoal={setWeightGoal} />
-      <MacroNutrients
-        dietPlan={dietPlan}
-        setDietPlan={setDietPlan}
-        macroNutrients={macroNutrients}
-        setMacroNutriens={setMacroNutriens}
-      />
-      <TouchableOpacity
-        style={[styles.btnContainer, { marginBottom: 20 }]}
-        disabled={errors.length > 0 ? true : false}
-        onPress={() => saveProfile()}>
-        <SecondaryButton text='Save' disabled={errors.length > 0 ? true : false} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.btnContainer, { marginBottom: 20 }]}
-        onPress={() => {
-          logout();
-          navigation.navigate('Landing');
-        }}>
-        <SecondaryButton text='Log out' />
-      </TouchableOpacity>
-    </ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.contentContainer}>
+        <UserData
+          weight={weight}
+          setWeight={setWeight}
+          height={height}
+          setHeight={setHeight}
+          age={age}
+          setAge={setAge}
+          gender={gender}
+          setGender={setGender}
+          heightUnit={heightUnit}
+          setHeightUnit={setHeightUnit}
+          weightUnit={weightUnit}
+          setWeightUnit={setWeightUnit}
+          activityLevel={activityLevel}
+          setActivityLevel={setActivityLevel}
+        />
+        <Goals weightGoal={weightGoal} setWeightGoal={setWeightGoal} />
+        <MacroNutrients
+          dietPlan={dietPlan}
+          setDietPlan={setDietPlan}
+          macroNutrients={macroNutrients}
+          setMacroNutriens={setMacroNutriens}
+        />
+        <TouchableOpacity
+          style={[styles.btnContainer, { marginBottom: 20 }]}
+          disabled={errors.length > 0 ? true : false}
+          onPress={() => saveProfile()}>
+          <SecondaryButton text='Save' disabled={errors.length > 0 ? true : false} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.btnContainer, { marginBottom: 20 }]}
+          onPress={() => {
+            logout();
+            navigation.navigate('Landing');
+          }}>
+          <SecondaryButton text='Log out' />
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     marginTop: 50,
     marginHorizontal: 20,
+  },
+  contentContainer: {
+    marginBottom: 70,
   },
   title: {
     fontSize: 32,
