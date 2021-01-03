@@ -29,7 +29,6 @@ const FoodScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Food</Text> */}
       <DatePicker date={date} setDate={setDate} />
       <FoodButtons />
     </View>

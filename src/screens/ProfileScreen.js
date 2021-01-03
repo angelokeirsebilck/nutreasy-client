@@ -67,7 +67,6 @@ const ProfileScreen = ({
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Profile</Text> */}
       <ScrollView showsVerticalScrollIndicator={false} style={styles.contentContainer}>
         <UserData
           weight={weight}

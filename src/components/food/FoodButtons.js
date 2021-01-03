@@ -103,7 +103,7 @@ const FoodButtons = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: '15%',
+    marginHorizontal: '10%',
     marginTop: 50,
   },
   rowContainer: {
