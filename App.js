@@ -24,11 +24,14 @@ import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import FoodScreen from './src/screens/FoodScreen';
+import SearchFood from './src/screens/SearchFoodScreen';
+import FavoFood from './src/screens/FavoFoodScreen';
+import OwnFoodScreen from './src/screens/OwnFoodScreen';
 
 // Navigation
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import NavigationService from './NavigationService';
 
 // Redux
@@ -50,22 +53,92 @@ const FoodStack = createStackNavigator(
     Food: {
       screen: FoodScreen,
     },
+    AddFood: {
+      screen: createMaterialTopTabNavigator(
+        {
+          Search: SearchFood,
+          Favo: FavoFood,
+          OwnFood: OwnFoodScreen,
+        },
+        {
+          initialRouteName: 'Search',
+
+          defaultNavigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, horizontal, tintColor }) => {
+              const { routeName } = navigation.state;
+              if (routeName === 'Search') {
+                return <FontAwesome name='search' size={24} color={tintColor} />;
+              } else if (routeName === 'Favo') {
+                return <FontAwesome name='star' size={24} color={tintColor} />;
+              } else if (routeName === 'OwnFood') {
+                return <FontAwesome name='home' size={24} color={tintColor} />;
+              }
+            },
+          }),
+          tabBarOptions: {
+            activeTintColor: BLUE_DARK,
+            inactiveTintColor: 'white',
+            showIcon: true,
+            showLabel: false,
+            style: {
+              backgroundColor: PRIMARY_COLOR,
+            },
+            indicatorStyle: {
+              backgroundColor: BLUE_DARK,
+              height: 3,
+            },
+          },
+        }
+      ),
+    },
   },
   {
     initialRouteName: 'Food',
     headerMode: 'screen',
-    defaultNavigationOptions: {
+    defaultNavigationOptions: ({ navigation }) => ({
+      title: navigation.getParam('title'),
       cardStyle: { backgroundColor: '#FFFFFF' },
-    },
+      headerTitleStyle: {
+        color: PRIMARY_COLOR,
+        fontFamily: 'Roboto_700Bold',
+        fontSize: 30,
+      },
+    }),
   }
 );
 
 const HomeStack = createBottomTabNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: createStackNavigator(
+        {
+          Home: {
+            screen: HomeScreen,
+          },
+        },
+        {
+          initialRouteName: 'Home',
+          headerMode: 'screen',
+          defaultNavigationOptions: {
+            cardStyle: { backgroundColor: '#FFFFFF' },
+          },
+        }
+      ),
     },
-    Profile: ProfileScreen,
+    Profile: createStackNavigator(
+      {
+        Profile: {
+          screen: ProfileScreen,
+        },
+      },
+      {
+        initialRouteName: 'Profile',
+        headerMode: 'screen',
+        defaultNavigationOptions: {
+          cardStyle: { backgroundColor: '#FFFFFF' },
+        },
+      }
+    ),
   },
   {
     initialRouteName: 'Home',

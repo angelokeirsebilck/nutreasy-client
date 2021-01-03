@@ -33,7 +33,7 @@ const DatePicker = ({ date, setDate }) => {
 
   const nextDay = new Date(date.getTime() + 86400000);
   if (nextDay > dateNow) {
-    console.log('disabled');
+    // console.log('disabled');
   }
 
   return (

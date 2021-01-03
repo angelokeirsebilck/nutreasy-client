@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     color: PRIMARY_COLOR,
   },
   groupFieldName: {
-    width: '70%',
+    width: '85%',
     color: PRIMARY_COLOR,
     fontFamily: 'Roboto_400Regular',
     fontSize: 16,

@@ -41,7 +41,7 @@ const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Nutreasy</Text>
+      {/* <Text style={styles.title}>Nutreasy</Text> */}
       {calories !== null ? <Food calories={calories} /> : null}
       {/* 
       Disabled until pedometer gets fixed in Expo
@@ -52,7 +52,7 @@ const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: 20,
     marginHorizontal: 20,
   },
   title: {
@@ -61,6 +61,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: PRIMARY_COLOR,
     marginBottom: 20,
+    paddingBottom: 5,
+    borderBottomWidth: 2,
+    borderColor: PRIMARY_COLOR,
   },
 });
 
@@ -69,6 +72,18 @@ const mapStateToProps = (state) => ({
   profile: state.profile.profile,
   calories: state.profile.calories,
 });
+
+HomeScreen.navigationOptions = () => {
+  return {
+    title: 'Nutreasy',
+    headerTitleStyle: {
+      color: PRIMARY_COLOR,
+      fontFamily: 'Roboto_700Bold',
+      fontSize: 30,
+      paddingLeft: 5,
+    },
+  };
+};
 
 export default withNavigation(
   connect(mapStateToProps, { logout, setBmr, loadProfile })(HomeScreen)

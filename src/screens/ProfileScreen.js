@@ -67,7 +67,7 @@ const ProfileScreen = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
+      {/* <Text style={styles.title}>Profile</Text> */}
       <ScrollView showsVerticalScrollIndicator={false} style={styles.contentContainer}>
         <UserData
           weight={weight}
@@ -112,11 +112,11 @@ const ProfileScreen = ({
 };
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: 20,
     marginHorizontal: 20,
   },
   contentContainer: {
-    marginBottom: 70,
+    marginBottom: 0,
   },
   title: {
     fontSize: 32,
@@ -124,6 +124,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: PRIMARY_COLOR,
     marginBottom: 20,
+    paddingBottom: 5,
+    borderBottomWidth: 2,
+    borderColor: PRIMARY_COLOR,
   },
   btnContainer: {
     display: 'flex',
@@ -158,10 +161,11 @@ ProfileScreen.defaultProps = {
 ProfileScreen.navigationOptions = () => {
   return {
     title: 'Profile',
-    headerLeft: () => null,
     headerTitleStyle: {
       color: PRIMARY_COLOR,
       fontFamily: 'Roboto_700Bold',
+      fontSize: 30,
+      paddingLeft: 5,
     },
   };
 };
