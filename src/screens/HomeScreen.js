@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, BackHandler } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, BackHandler, Button } from 'react-native';
 import { connect } from 'react-redux';
+import * as AppAuth from 'expo-app-auth';
+import { AsyncStorage } from 'react-native';
 
 // Colors
 import { PRIMARY_COLOR } from '../config/theme';
 
 // Actions
-import { logout } from '../actions/auth';
+import { logout, loadFatToken } from '../actions/auth';
 import { setBmr, loadProfile } from '../actions/profile';
 
 // Components
@@ -15,13 +17,13 @@ import Food from '../components/home/Food';
 // Navigation
 import { withNavigation } from 'react-navigation';
 
-const HomeScreen = ({ auth, navigation, calories, loadProfile }) => {
+const HomeScreen = ({ auth, navigation, calories, loadProfile, loadFatToken }) => {
   useEffect(() => {
     if (!auth.isAuthenticated) {
       navigation.navigate('Landing');
     }
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
-
+    loadFatToken();
     // Load profile when homescreen is focus on init.
     const isFocused = navigation.isFocused();
     if (isFocused) {
@@ -86,5 +88,5 @@ HomeScreen.navigationOptions = () => {
 };
 
 export default withNavigation(
-  connect(mapStateToProps, { logout, setBmr, loadProfile })(HomeScreen)
+  connect(mapStateToProps, { logout, setBmr, loadProfile, loadFatToken })(HomeScreen)
 );

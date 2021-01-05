@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 
 // Colors
 import { PRIMARY_COLOR } from '../config/theme';
 
 // Icons
 import { FontAwesome } from '@expo/vector-icons';
+import FoodItem from '../components/food/FoodItem';
 
-const SearchFood = () => {
+// Actions
+import { searchFood } from '../actions/food';
+
+// Components
+import FoodItemSearch from '../components/food/FoodItemSearch';
+
+const SearchFood = ({ searchFood, food: { searchedFood } }) => {
   const [searchString, setSearchString] = useState('');
+
+  useEffect(() => {}, []);
+
+  const startSearch = () => {
+    if (searchString != '') {
+      searchFood(searchString);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -21,15 +37,28 @@ const SearchFood = () => {
           onChangeText={(val) => setSearchString(val)}
           underlineColorAndroid='transparent'
           placeholderTextColor={PRIMARY_COLOR}
+          onEndEditing={() => {
+            startSearch();
+          }}
         />
       </View>
+      <FlatList
+        style={styles.foodList}
+        data={searchedFood}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(food) => food.food_id}
+        renderItem={({ item }) => <FoodItemSearch id={item.food_id} name={item.food_name} />}
+      />
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
+    alignItems: 'center',
     marginTop: 20,
     marginHorizontal: 20,
+    marginBottom: 80,
   },
   searchSection: {
     height: 40,
@@ -39,6 +68,8 @@ const styles = StyleSheet.create({
     borderColor: PRIMARY_COLOR,
     borderWidth: 2,
     borderRadius: 10,
+    maxWidth: 240,
+    marginBottom: 20,
   },
   searchIcon: {
     paddingLeft: 10,
@@ -51,6 +82,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     color: PRIMARY_COLOR,
   },
+  foodList: {
+    width: '100%',
+  },
 });
 
-export default SearchFood;
+const mapStateToProps = (state) => ({
+  food: state.food,
+});
+
+export default connect(mapStateToProps, { searchFood })(SearchFood);

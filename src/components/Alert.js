@@ -22,13 +22,14 @@ const Alert = ({ alert }) => {
 
 const styles = StyleSheet.create({
   errorContainer: {
-    position: 'absolute',
-    width: '90%',
-    top: 20,
-    start: 20,
-    right: 20,
-    zIndex: 10,
-    marginTop: 30,
+    // position: 'absolute',
+    // width: '90%',
+    // top: 20,
+    // start: 20,
+    // right: 20,
+    // zIndex: 10,
+    marginTop: 10,
+    width: '100%',
   },
   alertContainer: {
     backgroundColor: 'white',

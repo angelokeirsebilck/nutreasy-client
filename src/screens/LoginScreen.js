@@ -44,7 +44,10 @@ const LoginScreen = ({ navigation, loginUser, register, auth, alert }) => {
 
   return (
     <View style={styles.container}>
-      <Alert />
+      <View style={styles.alertContainer}>
+        <Alert />
+      </View>
+
       <View style={styles.logoContainer}>
         <Logo />
       </View>
@@ -90,6 +93,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: 'white',
     position: 'relative',
+    marginTop: 30,
+  },
+  alertContainer: {
+    marginHorizontal: 20,
   },
   logoContainer: {
     flex: 3,

@@ -8,6 +8,9 @@ import NavigationService from '../../NavigationService';
 // Utils
 import calcBMR from '../utils/BMRCalculator';
 
+// Actions
+import { getFood } from '../actions/food';
+
 export const loadProfile = () => async (dispatch) => {
   try {
     const res = await axios.get(`${API_URL}/api/profile/me`);
@@ -26,6 +29,7 @@ export const loadProfile = () => async (dispatch) => {
         res.data.heightUnit
       )
     );
+    dispatch(getFood());
   } catch (error) {
     console.log(error);
   }

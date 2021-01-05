@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppLoading from 'expo-app-loading';
+import * as AppAuth from 'expo-app-auth';
+import { AsyncStorage } from 'react-native';
 
 // Icons
 import { Entypo } from '@expo/vector-icons';
@@ -27,6 +29,7 @@ import FoodScreen from './src/screens/FoodScreen';
 import SearchFood from './src/screens/SearchFoodScreen';
 import FavoFood from './src/screens/FavoFoodScreen';
 import OwnFoodScreen from './src/screens/OwnFoodScreen';
+import NewFoodScreen from './src/screens/NewFoodScreen';
 
 // Navigation
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
@@ -52,6 +55,9 @@ const FoodStack = createStackNavigator(
   {
     Food: {
       screen: FoodScreen,
+    },
+    NewFood2: {
+      screen: NewFoodScreen,
     },
     AddFood: {
       screen: createMaterialTopTabNavigator(

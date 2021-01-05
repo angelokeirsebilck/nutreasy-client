@@ -17,3 +17,14 @@ export const ADD_ERROR = 'ADD_ERROR';
 export const REMOVE_ERROR = 'REMOVE_ERROR';
 export const SET_BMR = 'SET_BMR';
 export const SET_CALORIES = 'SET_CALORIES';
+
+// Food
+export const ADD_ERROR_FOOD = 'ADD_ERROR_FOOD';
+export const REMOVE_ERROR_FOOD = 'REMOVE_ERROR_FOOD';
+export const CLEAR_ALL_ERROR_FOOD = 'CLEAR_ALL_ERROR_FOOD';
+export const CREATE_FOOD = 'CREATE_FOOD';
+export const UPDATE_FOOD = 'UPDATE_FOOD';
+export const GET_FOOD = 'GET_FOOD';
+export const CLEAR_FOOD = 'CLEAR_FOOD';
+export const EDIT_FOOD_READY = 'EDIT_FOOD_READY';
+export const GET_SEARCH_FOOD = 'GET_SEARCH_FOOD';

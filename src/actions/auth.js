@@ -8,8 +8,13 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCES,
   CLEAR_PROFILE,
+  CLEAR_FOOD,
 } from './types';
+
+// Utils
 import setAuthToken from '../utils/setAuthToken';
+
+// Actions
 import { setAlert } from './alert';
 import { loadProfile } from './profile';
 
@@ -27,6 +32,15 @@ export const loadUser = (navigation = null) => async (dispatch) => {
     });
     if (navigation != null) navigation.navigate('Home');
     dispatch(loadProfile());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const loadFatToken = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${API_URL}/api/auth/fat`);
+    await AsyncStorage.setItem('fatToken', res.data);
   } catch (error) {
     console.log(error);
   }
@@ -107,5 +121,8 @@ export const logout = () => async (dispatch) => {
   });
   dispatch({
     type: CLEAR_PROFILE,
+  });
+  dispatch({
+    type: CLEAR_FOOD,
   });
 };
