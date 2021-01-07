@@ -32,7 +32,6 @@ const FoodDataNew = ({ createFood, editFood, item, edit, search, searchFoodById 
       calories: d.calories,
     };
     if (edit) {
-      console.log(isFavorite);
       let data = {
         name: d.name,
         measurement_description: d.measurementDescription,
@@ -43,8 +42,6 @@ const FoodDataNew = ({ createFood, editFood, item, edit, search, searchFoodById 
         calories: d.calories,
         favorite: isFavorite,
       };
-
-      console.log(data.favorite);
 
       editFood(data, item.id);
       return;
@@ -202,7 +199,7 @@ const FoodDataNew = ({ createFood, editFood, item, edit, search, searchFoodById 
         )}
 
         <View style={styles.groupFields}>
-          <Text style={styles.groupFieldName}>Carbohydrates (gr)</Text>
+          <Text style={styles.groupFieldName}>Carbohydrates (g)</Text>
           <Controller
             name='carbs'
             control={control}
@@ -231,7 +228,7 @@ const FoodDataNew = ({ createFood, editFood, item, edit, search, searchFoodById 
         )}
 
         <View style={styles.groupFields}>
-          <Text style={styles.groupFieldName}>Protein (gr)</Text>
+          <Text style={styles.groupFieldName}>Protein (g)</Text>
           <Controller
             name='protein'
             control={control}
@@ -260,7 +257,7 @@ const FoodDataNew = ({ createFood, editFood, item, edit, search, searchFoodById 
         )}
 
         <View style={styles.groupFields}>
-          <Text style={styles.groupFieldName}>Fat (gr) </Text>
+          <Text style={styles.groupFieldName}>Fat (g) </Text>
           <Controller
             name='fat'
             control={control}

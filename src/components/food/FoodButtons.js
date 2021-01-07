@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
 // Colors
 import { PRIMARY_COLOR, SECONDARY_COLOR, GREY } from '../../config/theme';
@@ -12,7 +13,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 // Navigation
 import NavigationService from '../../../NavigationService';
 
-const FoodButtons = () => {
+const FoodButtons = ({ foodEntry: { foodEntries } }) => {
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
@@ -25,7 +26,14 @@ const FoodButtons = () => {
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Breakfast</Text>
             <View style={styles.iconCircle}>
-              <MaterialIcons name='free-breakfast' style={styles.iconFilled} />
+              {foodEntries == '' ? (
+                <MaterialIcons name='free-breakfast' style={styles.icon} />
+              ) : (
+                <MaterialIcons
+                  name='free-breakfast'
+                  style={foodEntries.food.breakfast.length > 0 ? styles.iconFilled : styles.icon}
+                />
+              )}
             </View>
           </View>
         </TouchableOpacity>
@@ -38,7 +46,14 @@ const FoodButtons = () => {
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Lucnh</Text>
             <View style={styles.iconCircle}>
-              <MaterialCommunityIcons name='bread-slice' style={styles.icon} />
+              {foodEntries == '' ? (
+                <MaterialCommunityIcons name='bread-slice' style={styles.icon} />
+              ) : (
+                <MaterialCommunityIcons
+                  name='bread-slice'
+                  style={foodEntries.food.lunch.length > 0 ? styles.iconFilled : styles.icon}
+                />
+              )}
             </View>
           </View>
         </TouchableOpacity>
@@ -51,7 +66,14 @@ const FoodButtons = () => {
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Dinner</Text>
             <View style={styles.iconCircle}>
-              <MaterialIcons name='dinner-dining' style={styles.icon} />
+              {foodEntries == '' ? (
+                <MaterialIcons name='dinner-dining' style={styles.icon} />
+              ) : (
+                <MaterialIcons
+                  name='dinner-dining'
+                  style={foodEntries.food.dinner.length > 0 ? styles.iconFilled : styles.icon}
+                />
+              )}
             </View>
           </View>
         </TouchableOpacity>
@@ -66,7 +88,14 @@ const FoodButtons = () => {
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Snack</Text>
             <View style={styles.iconCircle}>
-              <FontAwesome5 name='cookie-bite' style={styles.icon} />
+              {foodEntries == '' ? (
+                <FontAwesome5 name='cookie-bite' style={styles.icon} />
+              ) : (
+                <FontAwesome5
+                  name='cookie-bite'
+                  style={foodEntries.food.snack1.length > 0 ? styles.iconFilled : styles.icon}
+                />
+              )}
             </View>
           </View>
         </TouchableOpacity>
@@ -79,7 +108,14 @@ const FoodButtons = () => {
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Snack</Text>
             <View style={styles.iconCircle}>
-              <FontAwesome5 name='cookie-bite' style={styles.iconFilled} />
+              {foodEntries == '' ? (
+                <FontAwesome5 name='cookie-bite' style={styles.icon} />
+              ) : (
+                <FontAwesome5
+                  name='cookie-bite'
+                  style={foodEntries.food.snack2.length > 0 ? styles.iconFilled : styles.icon}
+                />
+              )}
             </View>
           </View>
         </TouchableOpacity>
@@ -92,7 +128,14 @@ const FoodButtons = () => {
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Snack</Text>
             <View style={styles.iconCircle}>
-              <FontAwesome5 name='cookie-bite' style={styles.icon} />
+              {foodEntries == '' ? (
+                <FontAwesome5 name='cookie-bite' style={styles.icon} />
+              ) : (
+                <FontAwesome5
+                  name='cookie-bite'
+                  style={foodEntries.food.snack3.length > 0 ? styles.iconFilled : styles.icon}
+                />
+              )}
             </View>
           </View>
         </TouchableOpacity>
@@ -142,4 +185,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FoodButtons;
+const mapStateToProps = (state) => ({
+  foodEntry: state.foodEntry,
+});
+
+export default connect(mapStateToProps, {})(FoodButtons);

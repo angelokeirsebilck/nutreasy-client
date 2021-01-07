@@ -21,7 +21,7 @@ const FoodItemSearch = ({ name, id }) => {
         <TouchableOpacity
           onPress={() =>
             NavigationService.navigate('NewFood2', {
-              title: 'Edit Food',
+              title: 'Info Food',
               edit: false,
               item: {
                 id,

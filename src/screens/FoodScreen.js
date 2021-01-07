@@ -10,7 +10,7 @@ import DatePicker from '../components/food/DatePicker';
 import FoodButtons from '../components/food/FoodButtons';
 
 const FoodScreen = ({ navigation }) => {
-  const [date, setDate] = useState(new Date(Date.now()));
+  // const [date, setDate] = useState(new Date(Date.now()));
 
   const backAction = () => {
     NavigationService.navigate('Home');
@@ -29,7 +29,7 @@ const FoodScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <DatePicker date={date} setDate={setDate} />
+      <DatePicker />
       <FoodButtons />
     </View>
   );

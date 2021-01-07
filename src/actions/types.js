@@ -28,3 +28,7 @@ export const GET_FOOD = 'GET_FOOD';
 export const CLEAR_FOOD = 'CLEAR_FOOD';
 export const EDIT_FOOD_READY = 'EDIT_FOOD_READY';
 export const GET_SEARCH_FOOD = 'GET_SEARCH_FOOD';
+
+// Food Entries
+export const GET_FOOD_ENTRIES = 'GET_FOOD_ENTRIES';
+export const SET_DATE = 'SET_DATE';

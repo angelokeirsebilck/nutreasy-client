@@ -16,6 +16,7 @@ import NavigationService from '../../NavigationService';
 // Actions
 import { setAlert } from './alert';
 
+// Utils
 import fatSecretApi from '../utils/fatSecret';
 
 export const addError = (field, msg) => async (dispatch) => {
@@ -115,7 +116,6 @@ export const editFoodReady = () => (dispatch) => {
 
 export const searchFood = (searchString) => async (dispatch) => {
   const fatSecretToken = await AsyncStorage.getItem('fatToken');
-
   const config = {
     headers: {
       Authorization: `Bearer ${fatSecretToken}`,
@@ -148,6 +148,7 @@ export const searchFoodById = (id) => async (dispatch) => {
 
   try {
     const res = await fatSecretApi.get(`?method=food.get.v2&food_id=${id}&format=json`, config);
+
     const servings = res.data.food.servings.serving;
     let filtered;
     if (servings.length > 0) {

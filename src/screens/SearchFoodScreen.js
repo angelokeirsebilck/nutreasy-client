@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import { AsyncStorage } from 'react-native';
 
 // Colors
 import { PRIMARY_COLOR } from '../config/theme';
@@ -11,19 +12,22 @@ import FoodItem from '../components/food/FoodItem';
 
 // Actions
 import { searchFood } from '../actions/food';
+import { loadFatToken } from '../actions/auth';
 
 // Components
 import FoodItemSearch from '../components/food/FoodItemSearch';
 
-const SearchFood = ({ searchFood, food: { searchedFood } }) => {
+const SearchFood = ({ loadFatToken, searchFood, food: { searchedFood } }) => {
   const [searchString, setSearchString] = useState('');
 
   useEffect(() => {}, []);
 
-  const startSearch = () => {
-    if (searchString != '') {
-      searchFood(searchString);
+  const startSearch = async () => {
+    const fatSecretToken = await AsyncStorage.getItem('fatToken');
+    if (fatSecretToken == null) {
+      await loadFatToken();
     }
+    if (searchString != '') searchFood(searchString);
   };
 
   return (
@@ -91,4 +95,4 @@ const mapStateToProps = (state) => ({
   food: state.food,
 });
 
-export default connect(mapStateToProps, { searchFood })(SearchFood);
+export default connect(mapStateToProps, { searchFood, loadFatToken })(SearchFood);

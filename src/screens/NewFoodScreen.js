@@ -8,14 +8,13 @@ import {
   ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { HeaderBackButton } from 'react-navigation-stack';
 
 // Colors
 import { PRIMARY_COLOR, RED } from '../config/theme';
 
 // Components
-import SecondaryButton from '../components/SecondaryButton';
 import Alert from '../components/Alert';
+import FoodDataSearch from '../components/food/FoodDataSearch';
 
 // Actions
 import { createFood, clearAllErrors } from '../actions/food';
@@ -32,7 +31,11 @@ const NewFoodScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <Alert />
-      <FoodDataNew edit={edit} item={item} search={search} />
+      {search ? (
+        <FoodDataSearch edit={edit} item={item} search={search} />
+      ) : (
+        <FoodDataNew edit={edit} item={item} search={search} />
+      )}
     </ScrollView>
   );
 };
