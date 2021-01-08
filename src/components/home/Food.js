@@ -17,6 +17,7 @@ const Food = ({
   profile: {
     profile: { macroNutrients },
   },
+  foodEntry: { totals },
 }) => {
   const carbsAmount = parseFloat((((calories / 100) * macroNutrients.carbs) / 4).toFixed(0));
   const proteinAmount = parseFloat((((calories / 100) * macroNutrients.protein) / 4).toFixed(0));
@@ -34,16 +35,24 @@ const Food = ({
         <Text style={styles.subTitle}>Food</Text>
       </View>
       <View style={styles.groupFields}>
-        <Text style={styles.groupFieldName}>0 / {calories} Kcal</Text>
+        <Text style={styles.groupFieldName}>
+          {totals.caloriesTotal} / {calories} Kcal
+        </Text>
       </View>
       <View style={styles.groupFields}>
-        <Text style={styles.groupFieldName}>0 / {carbsAmount} Carbohydrates (gr)</Text>
+        <Text style={styles.groupFieldName}>
+          {totals.carbsTotal} / {carbsAmount} Carbohydrates (gr)
+        </Text>
       </View>
       <View style={styles.groupFields}>
-        <Text style={styles.groupFieldName}>0 / {proteinAmount} Protein (gr)</Text>
+        <Text style={styles.groupFieldName}>
+          {totals.proteinTotal} / {proteinAmount} Protein (gr)
+        </Text>
       </View>
       <View style={[styles.groupFields, { marginBottom: 0 }]}>
-        <Text style={styles.groupFieldName}>0 / {fatAmount} Fat (gr)</Text>
+        <Text style={styles.groupFieldName}>
+          {totals.fatTotal} / {fatAmount} Fat (gr)
+        </Text>
       </View>
     </View>
   );
@@ -99,5 +108,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
+  foodEntry: state.foodEntry,
 });
 export default connect(mapStateToProps)(Food);

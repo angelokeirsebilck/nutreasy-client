@@ -54,13 +54,7 @@ const HomeScreen = ({
   }, []);
 
   return (
-    <View style={styles.container}>
-      {/* <Text style={styles.title}>Nutreasy</Text> */}
-      {calories !== null ? <Food calories={calories} /> : null}
-      {/* 
-      Disabled until pedometer gets fixed in Expo
-      <Steps /> */}
-    </View>
+    <View style={styles.container}>{calories !== null ? <Food calories={calories} /> : null}</View>
   );
 };
 

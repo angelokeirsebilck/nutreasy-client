@@ -11,20 +11,41 @@ import { Entypo } from '@expo/vector-icons';
 import { PRIMARY_COLOR, SECONDARY_COLOR, RED } from '../config/theme';
 
 // Actions
-import { setAmount } from '../actions/foodEntries';
+import {
+  setAmount,
+  setSelectedFoodList,
+  setLoadingFalse,
+  calcTotals,
+} from '../actions/foodEntries';
 
-const SaveFoodEntriesScreen = ({ navigation, foodEntry: { selectedFood }, setAmount }) => {
-  const [calories, setCalories] = useState(0);
-  const [carbs, setCarbs] = useState(0);
-  const [protein, setProtein] = useState(0);
-  const [fat, setFat] = useState(0);
+// Components
+import DoneButton from '../components/food/DoneButton';
+
+// Utils
+import { ucFirst } from '../utils/ucFirst';
+
+const SaveFoodEntriesScreen = ({
+  navigation,
+  foodEntry: {
+    selectedFood,
+    moment,
+    totalsMoment,
+    foodEntries: { food },
+  },
+  setAmount,
+  setSelectedFoodList,
+}) => {
+  // const [calories, setCalories] = useState(0);
+  // const [carbs, setCarbs] = useState(0);
+  // const [protein, setProtein] = useState(0);
+  // const [fat, setFat] = useState(0);
 
   const plusClicked = (id) => {
     const item = selectedFood.filter((item) => item.foodItem == id);
     const newMultiplier = item[0].amount + 0.25;
 
     setAmount(id, newMultiplier);
-    calcTotal();
+    setSelectedFoodList(selectedFood);
   };
 
   const minusClicked = (id) => {
@@ -33,25 +54,143 @@ const SaveFoodEntriesScreen = ({ navigation, foodEntry: { selectedFood }, setAmo
 
     if (newMultiplier <= 0) return;
     setAmount(id, newMultiplier);
-    calcTotal();
+    setSelectedFoodList(selectedFood);
   };
 
-  const calcTotal = () => {
-    let carbsTotal = 0;
-    let proteinTotal = 0;
-    let caloriesTotal = 0;
-    let fatTotal = 0;
-    selectedFood.forEach((item) => {
-      carbsTotal = carbsTotal + item.carbs * item.amount;
-      proteinTotal = proteinTotal + item.protein * item.amount;
-      caloriesTotal = caloriesTotal + item.calories * item.amount;
-      fatTotal = fatTotal + item.fat * item.amount;
-    });
+  // const calcTotal = () => {
+  //   let carbsTotal = 0;
+  //   let proteinTotal = 0;
+  //   let caloriesTotal = 0;
+  //   let fatTotal = 0;
+  //   console.log(selectedFood.length);
+  //   selectedFood.forEach((item) => {
+  //     carbsTotal = carbsTotal + item.carbs * item.amount;
+  //     proteinTotal = proteinTotal + item.protein * item.amount;
+  //     caloriesTotal = caloriesTotal + item.calories * item.amount;
+  //     fatTotal = fatTotal + item.fat * item.amount;
+  //   });
 
-    setCarbs(carbsTotal);
-    setFat(fatTotal);
-    setCalories(caloriesTotal);
-    setProtein(proteinTotal);
+  //   setCarbs(carbsTotal);
+  //   setFat(fatTotal);
+  //   setCalories(caloriesTotal);
+  //   setProtein(proteinTotal);
+  // };
+
+  const transformDbEntries = () => {
+    let selectedFood = [];
+
+    switch (moment) {
+      case 'breakfast':
+        if (food.breakfast.length > 0) {
+          food.breakfast.forEach((item) => {
+            const selectedFoodItem = {
+              name: item.foodItem.name,
+              measurementDescription: item.foodItem.measurement_description,
+              unit: item.foodItem.number_of_units,
+              carbs: item.foodItem.carbohydrate,
+              protein: item.foodItem.protein,
+              fat: item.foodItem.fat,
+              amount: item.amount,
+              foodItem: item.foodItem._id,
+              calories: item.foodItem.calories,
+            };
+            selectedFood.push(selectedFoodItem);
+          });
+        }
+        break;
+      case 'lunch':
+        if (food.lunch.length > 0) {
+          food.lunch.forEach((item) => {
+            const selectedFoodItem = {
+              name: item.foodItem.name,
+              measurementDescription: item.foodItem.measurement_description,
+              unit: item.foodItem.number_of_units,
+              carbs: item.foodItem.carbohydrate,
+              protein: item.foodItem.protein,
+              fat: item.foodItem.fat,
+              amount: item.amount,
+              foodItem: item.foodItem._id,
+              calories: item.foodItem.calories,
+            };
+            selectedFood.push(selectedFoodItem);
+          });
+        }
+        break;
+      case 'dinner':
+        if (food.dinner.length > 0) {
+          food.dinner.forEach((item) => {
+            const selectedFoodItem = {
+              name: item.foodItem.name,
+              measurementDescription: item.foodItem.measurement_description,
+              unit: item.foodItem.number_of_units,
+              carbs: item.foodItem.carbohydrate,
+              protein: item.foodItem.protein,
+              fat: item.foodItem.fat,
+              amount: item.amount,
+              foodItem: item.foodItem._id,
+              calories: item.foodItem.calories,
+            };
+            selectedFood.push(selectedFoodItem);
+          });
+        }
+        break;
+      case 'snack1':
+        if (food.snack1.length > 0) {
+          food.snack1.forEach((item) => {
+            const selectedFoodItem = {
+              name: item.foodItem.name,
+              measurementDescription: item.foodItem.measurement_description,
+              unit: item.foodItem.number_of_units,
+              carbs: item.foodItem.carbohydrate,
+              protein: item.foodItem.protein,
+              fat: item.foodItem.fat,
+              amount: item.amount,
+              foodItem: item.foodItem._id,
+              calories: item.foodItem.calories,
+            };
+            selectedFood.push(selectedFoodItem);
+          });
+        }
+        break;
+      case 'snack2':
+        if (food.snack2.length > 0) {
+          food.snack2.forEach((item) => {
+            const selectedFoodItem = {
+              name: item.foodItem.name,
+              measurementDescription: item.foodItem.measurement_description,
+              unit: item.foodItem.number_of_units,
+              carbs: item.foodItem.carbohydrate,
+              protein: item.foodItem.protein,
+              fat: item.foodItem.fat,
+              amount: item.amount,
+              foodItem: item.foodItem._id,
+              calories: item.foodItem.calories,
+            };
+            selectedFood.push(selectedFoodItem);
+          });
+        }
+        break;
+      case 'snack3':
+        if (food.snack3.length > 0) {
+          food.snack3.forEach((item) => {
+            const selectedFoodItem = {
+              name: item.foodItem.name,
+              measurementDescription: item.foodItem.measurement_description,
+              unit: item.foodItem.number_of_units,
+              carbs: item.foodItem.carbohydrate,
+              protein: item.foodItem.protein,
+              fat: item.foodItem.fat,
+              amount: item.amount,
+              foodItem: item.foodItem._id,
+              calories: item.foodItem.calories,
+            };
+            selectedFood.push(selectedFoodItem);
+          });
+        }
+        break;
+    }
+
+    setSelectedFoodList(selectedFood);
   };
 
   useEffect(() => {
@@ -60,10 +199,28 @@ const SaveFoodEntriesScreen = ({ navigation, foodEntry: { selectedFood }, setAmo
       return true;
     });
 
-    calcTotal();
+    setSelectedFoodList(selectedFood);
+    const loadItems = navigation.getParam('loadItems');
+
+    if (loadItems) transformDbEntries();
+
+    const isFocused = navigation.isFocused();
+    if (!loadItems) {
+      if (isFocused) {
+        setSelectedFoodList(selectedFood);
+      }
+    }
+
+    // Load profile when homescreen is focused when switching screens.
+    const navFocusListener = navigation.addListener('didFocus', () => {
+      if (!loadItems) {
+        setSelectedFoodList(selectedFood);
+      }
+    });
 
     return () => {
       backHandler.remove();
+      navFocusListener.remove();
     };
   }, []);
   return (
@@ -75,19 +232,19 @@ const SaveFoodEntriesScreen = ({ navigation, foodEntry: { selectedFood }, setAmo
         </View>
         <View style={styles.groupFields}>
           <Text style={styles.groupFieldName}>Calories </Text>
-          <Text style={styles.groupFieldData}>{calories}</Text>
+          <Text style={styles.groupFieldData}>{totalsMoment.caloriesTotal}</Text>
         </View>
         <View style={styles.groupFields}>
           <Text style={styles.groupFieldName}>Carbohydrates (g) </Text>
-          <Text style={styles.groupFieldData}>{carbs}</Text>
+          <Text style={styles.groupFieldData}>{totalsMoment.carbsTotal}</Text>
         </View>
         <View style={styles.groupFields}>
           <Text style={styles.groupFieldName}>Protein (g) </Text>
-          <Text style={styles.groupFieldData}>{protein}</Text>
+          <Text style={styles.groupFieldData}>{totalsMoment.proteinTotal}</Text>
         </View>
         <View style={styles.groupFields}>
           <Text style={styles.groupFieldName}>Fat (g) </Text>
-          <Text style={styles.groupFieldData}>{fat}</Text>
+          <Text style={styles.groupFieldData}>{totalsMoment.fatTotal}</Text>
         </View>
       </View>
 
@@ -121,7 +278,11 @@ const SaveFoodEntriesScreen = ({ navigation, foodEntry: { selectedFood }, setAmo
 
       <TouchableOpacity
         style={styles.newFoodContainer}
-        onPress={() => navigation.navigate('AddFood')}>
+        onPress={() =>
+          navigation.navigate('AddFood', {
+            title: ucFirst(moment),
+          })
+        }>
         <Entypo name='squared-plus' style={styles.plusIcon} />
         <Text style={styles.newFood}>Add Food</Text>
       </TouchableOpacity>
@@ -245,6 +406,11 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  nextButton: {
+    paddingRight: 20,
+    fontSize: 20,
+    color: PRIMARY_COLOR,
+  },
 });
 
 const mapStateToProps = (state) => ({
@@ -256,7 +422,15 @@ SaveFoodEntriesScreen.navigationOptions = ({ navigation }) => {
     headerLeft: () => {
       return <HeaderBackButton onPress={() => navigation.goBack()} />;
     },
+    headerRight: () => {
+      return <DoneButton />;
+    },
   };
 };
 
-export default connect(mapStateToProps, { setAmount })(SaveFoodEntriesScreen);
+export default connect(mapStateToProps, {
+  setAmount,
+  setSelectedFoodList,
+  setLoadingFalse,
+  calcTotals,
+})(SaveFoodEntriesScreen);

@@ -64,7 +64,12 @@ const NextButton = ({
   return (
     <View>
       {selectedFood.length > 0 ? (
-        <TouchableOpacity onPress={() => NavigationService.navigate('SaveFood')}>
+        <TouchableOpacity
+          onPress={() =>
+            NavigationService.navigate('SaveFood', {
+              title: 'Save Food',
+            })
+          }>
           <Text style={styles.nextButton}>Next</Text>
         </TouchableOpacity>
       ) : (

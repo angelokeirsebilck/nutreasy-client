@@ -1,4 +1,12 @@
-import { LOAD_PROFILE, SET_PROFILE, ADD_ERROR, REMOVE_ERROR, SET_BMR, SET_CALORIES } from './types';
+import {
+  LOAD_PROFILE,
+  SET_PROFILE,
+  ADD_ERROR,
+  REMOVE_ERROR,
+  SET_BMR,
+  SET_CALORIES,
+  CLEAR_PROFILE,
+} from './types';
 import axios from 'axios';
 import { API_URL } from '../config/settings';
 
@@ -63,6 +71,12 @@ export const addError = (field, msg) => async (dispatch) => {
       field,
       msg,
     },
+  });
+};
+
+export const clearProfile = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_PROFILE,
   });
 };
 

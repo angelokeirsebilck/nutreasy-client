@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -26,6 +26,7 @@ const FoodItem = ({
   favorite,
   setSelectedFood,
   removeSelectedFood,
+  foodEntry: { selectedFood },
 }) => {
   const [selected, setSelected] = useState(false);
 
@@ -38,6 +39,14 @@ const FoodItem = ({
 
     setSelected(!selected);
   };
+
+  useEffect(() => {
+    selectedFood.forEach((item) => {
+      if (item.foodItem == id) {
+        setSelected(true);
+      }
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -126,4 +135,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-export default connect(null, { setSelectedFood, removeSelectedFood })(FoodItem);
+
+const mapStateToProps = (state) => ({
+  foodEntry: state.foodEntry,
+});
+
+export default connect(mapStateToProps, { setSelectedFood, removeSelectedFood })(FoodItem);

@@ -30,6 +30,7 @@ const FoodButtons = ({ foodEntry: { foodEntries }, setMoment }) => {
           if (foodEntries.food.breakfast.length > 0) {
             NavigationService.navigate('SaveFood', {
               title,
+              loadItems: true,
             });
           } else if (foodEntries.skip && foodEntries.skip.skipBreakfast) {
             NavigationService.navigate('SaveFood', {
@@ -48,6 +49,7 @@ const FoodButtons = ({ foodEntry: { foodEntries }, setMoment }) => {
           ) {
             NavigationService.navigate('SaveFood', {
               title,
+              loadItems: true,
             });
           } else {
             NavigationService.navigate('AddFood', {
@@ -62,6 +64,7 @@ const FoodButtons = ({ foodEntry: { foodEntries }, setMoment }) => {
           ) {
             NavigationService.navigate('SaveFood', {
               title,
+              loadItems: true,
             });
           } else {
             NavigationService.navigate('AddFood', {
@@ -76,6 +79,7 @@ const FoodButtons = ({ foodEntry: { foodEntries }, setMoment }) => {
           ) {
             NavigationService.navigate('SaveFood', {
               title,
+              loadItems: true,
             });
           } else {
             NavigationService.navigate('AddFood', {
@@ -90,6 +94,7 @@ const FoodButtons = ({ foodEntry: { foodEntries }, setMoment }) => {
           ) {
             NavigationService.navigate('SaveFood', {
               title,
+              loadItems: true,
             });
           } else {
             NavigationService.navigate('AddFood', {
@@ -104,6 +109,7 @@ const FoodButtons = ({ foodEntry: { foodEntries }, setMoment }) => {
           ) {
             NavigationService.navigate('SaveFood', {
               title,
+              loadItems: true,
             });
           } else {
             NavigationService.navigate('AddFood', {

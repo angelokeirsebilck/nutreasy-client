@@ -9,6 +9,8 @@ import {
   REGISTER_SUCCES,
   CLEAR_PROFILE,
   CLEAR_FOOD,
+  CLEAR_FOOD_ENTRIES,
+  GET_FOOD_ENTRIES,
 } from './types';
 
 // Utils
@@ -17,6 +19,7 @@ import setAuthToken from '../utils/setAuthToken';
 // Actions
 import { setAlert } from './alert';
 import { loadProfile } from './profile';
+import { getFoodEntries } from './foodEntries';
 
 // Navigation
 import NavigationService from '../../NavigationService';
@@ -66,6 +69,7 @@ export const register = (email, password) => async (dispatch) => {
       payload: res.data.token,
     });
     dispatch(loadUser());
+
     NavigationService.navigate('Home');
   } catch (error) {
     const errors = error.response.data.errors;
@@ -93,15 +97,16 @@ export const loginUser = (email, password) => async (dispatch) => {
   try {
     const res = await axios.post(`${API_URL}/api/auth`, body, config);
     await AsyncStorage.setItem('token', res.data.token);
+
     dispatch({
       type: LOGIN_SUCCES,
       payload: res.data.token,
     });
-
     dispatch(loadUser());
     dispatch(loadProfile());
-
     NavigationService.navigate('Home');
+
+    dispatch(getFoodEntries());
   } catch (error) {
     console.log(error);
     const errors = error.response.data.errors;
@@ -124,5 +129,8 @@ export const logout = () => async (dispatch) => {
   });
   dispatch({
     type: CLEAR_FOOD,
+  });
+  dispatch({
+    type: CLEAR_FOOD_ENTRIES,
   });
 };
