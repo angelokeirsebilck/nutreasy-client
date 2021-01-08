@@ -8,9 +8,6 @@ import { AntDesign } from '@expo/vector-icons';
 // Colors
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../config/theme';
 
-// Actions
-import { searchFoodById } from '../../actions/food';
-
 // Navigation
 import NavigationService from '../../../NavigationService';
 

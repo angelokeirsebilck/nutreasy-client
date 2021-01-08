@@ -31,4 +31,10 @@ export const GET_SEARCH_FOOD = 'GET_SEARCH_FOOD';
 
 // Food Entries
 export const GET_FOOD_ENTRIES = 'GET_FOOD_ENTRIES';
+export const SET_FOOD_ENTRIES = 'SET_FOOD_ENTRIES';
 export const SET_DATE = 'SET_DATE';
+export const SET_MOMENT = 'SET_MOMENT';
+export const SET_SELECTED_FOOD = 'SET_SELECTED_FOOD';
+export const REMOVE_SELECTED_FOOD = 'REMOVE_SELECTED_FOOD';
+export const CLEAR_SELECTED_FOOD = 'CLEAR_SELECTED_FOOD';
+export const SET_AMOUNT = 'SET_AMOUNT';

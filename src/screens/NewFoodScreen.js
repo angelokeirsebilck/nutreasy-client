@@ -6,8 +6,10 @@ import {
   TouchableOpacity,
   Alert as AlertRN,
   ScrollView,
+  BackHandler,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { HeaderBackButton } from 'react-navigation-stack';
 
 // Colors
 import { PRIMARY_COLOR, RED } from '../config/theme';
@@ -26,7 +28,15 @@ const NewFoodScreen = ({ navigation }) => {
   const item = navigation.getParam('item');
   const search = navigation.getParam('search');
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      navigation.goBack();
+      return true;
+    });
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -66,6 +76,15 @@ const styles = StyleSheet.create({
 NewFoodScreen.navigationOptions = ({ navigation }) => {
   return {
     title: navigation.getParam('title'),
+    headerLeft: () => {
+      return (
+        <HeaderBackButton
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+      );
+    },
   };
 };
 

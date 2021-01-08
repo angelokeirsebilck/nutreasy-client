@@ -13,16 +13,115 @@ import { FontAwesome5 } from '@expo/vector-icons';
 // Navigation
 import NavigationService from '../../../NavigationService';
 
-const FoodButtons = ({ foodEntry: { foodEntries } }) => {
+// Actions
+import { setMoment } from '../../actions/foodEntries';
+
+const FoodButtons = ({ foodEntry: { foodEntries }, setMoment }) => {
+  const onClickHandler = (title) => {
+    setMoment(title.toLowerCase());
+
+    if (foodEntries == '') {
+      NavigationService.navigate('AddFood', {
+        title,
+      });
+    } else {
+      switch (title) {
+        case 'Breakfast':
+          if (foodEntries.food.breakfast.length > 0) {
+            NavigationService.navigate('SaveFood', {
+              title,
+            });
+          } else if (foodEntries.skip && foodEntries.skip.skipBreakfast) {
+            NavigationService.navigate('SaveFood', {
+              title,
+            });
+          } else {
+            NavigationService.navigate('AddFood', {
+              title,
+            });
+          }
+          break;
+        case 'Lunch':
+          if (
+            foodEntries.food.lunch.length > 0 ||
+            (foodEntries.skip && foodEntries.skip.skipLunch)
+          ) {
+            NavigationService.navigate('SaveFood', {
+              title,
+            });
+          } else {
+            NavigationService.navigate('AddFood', {
+              title,
+            });
+          }
+          break;
+        case 'Dinner':
+          if (
+            foodEntries.food.dinner.length > 0 ||
+            (foodEntries.skip && foodEntries.skip.skipDinner)
+          ) {
+            NavigationService.navigate('SaveFood', {
+              title,
+            });
+          } else {
+            NavigationService.navigate('AddFood', {
+              title,
+            });
+          }
+          break;
+        case 'Snack1':
+          if (
+            foodEntries.food.snack1.length > 0 ||
+            (foodEntries.skip && foodEntries.skip.skipSnack1)
+          ) {
+            NavigationService.navigate('SaveFood', {
+              title,
+            });
+          } else {
+            NavigationService.navigate('AddFood', {
+              title,
+            });
+          }
+          break;
+        case 'Snack2':
+          if (
+            foodEntries.food.snack2.length > 0 ||
+            (foodEntries.skip && foodEntries.skip.skipSnack2)
+          ) {
+            NavigationService.navigate('SaveFood', {
+              title,
+            });
+          } else {
+            NavigationService.navigate('AddFood', {
+              title,
+            });
+          }
+          break;
+        case 'Snack3':
+          if (
+            foodEntries.food.snack3.length > 0 ||
+            (foodEntries.skip && foodEntries.skip.skipSnack3)
+          ) {
+            NavigationService.navigate('SaveFood', {
+              title,
+            });
+          } else {
+            NavigationService.navigate('AddFood', {
+              title,
+            });
+          }
+          break;
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
         <TouchableOpacity
-          onPress={() =>
-            NavigationService.navigate('AddFood', {
-              title: 'Breakfast',
-            })
-          }>
+          onPress={() => {
+            onClickHandler('Breakfast');
+          }}>
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Breakfast</Text>
             <View style={styles.iconCircle}>
@@ -31,38 +130,44 @@ const FoodButtons = ({ foodEntry: { foodEntries } }) => {
               ) : (
                 <MaterialIcons
                   name='free-breakfast'
-                  style={foodEntries.food.breakfast.length > 0 ? styles.iconFilled : styles.icon}
+                  style={
+                    foodEntries.food.breakfast.length > 0 ||
+                    (foodEntries.skip && foodEntries.skip.skipBreakfast)
+                      ? styles.iconFilled
+                      : styles.icon
+                  }
                 />
               )}
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() =>
-            NavigationService.navigate('AddFood', {
-              title: 'Lunch',
-            })
-          }>
+          onPress={() => {
+            onClickHandler('Lunch');
+          }}>
           <View style={styles.columnContainer}>
-            <Text style={styles.title}>Lucnh</Text>
+            <Text style={styles.title}>Lunch</Text>
             <View style={styles.iconCircle}>
               {foodEntries == '' ? (
                 <MaterialCommunityIcons name='bread-slice' style={styles.icon} />
               ) : (
                 <MaterialCommunityIcons
                   name='bread-slice'
-                  style={foodEntries.food.lunch.length > 0 ? styles.iconFilled : styles.icon}
+                  style={
+                    foodEntries.food.lunch.length > 0 ||
+                    (foodEntries.skip && foodEntries.skip.skipLunch)
+                      ? styles.iconFilled
+                      : styles.icon
+                  }
                 />
               )}
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() =>
-            NavigationService.navigate('AddFood', {
-              title: 'Dinner',
-            })
-          }>
+          onPress={() => {
+            onClickHandler('Dinner');
+          }}>
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Dinner</Text>
             <View style={styles.iconCircle}>
@@ -71,7 +176,12 @@ const FoodButtons = ({ foodEntry: { foodEntries } }) => {
               ) : (
                 <MaterialIcons
                   name='dinner-dining'
-                  style={foodEntries.food.dinner.length > 0 ? styles.iconFilled : styles.icon}
+                  style={
+                    foodEntries.food.dinner.length > 0 ||
+                    (foodEntries.skip && foodEntries.skip.skipDinner)
+                      ? styles.iconFilled
+                      : styles.icon
+                  }
                 />
               )}
             </View>
@@ -80,11 +190,9 @@ const FoodButtons = ({ foodEntry: { foodEntries } }) => {
       </View>
       <View style={[styles.rowContainer, { marginTop: 30 }]}>
         <TouchableOpacity
-          onPress={() =>
-            NavigationService.navigate('AddFood', {
-              title: 'Snack',
-            })
-          }>
+          onPress={() => {
+            onClickHandler('Snack1');
+          }}>
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Snack</Text>
             <View style={styles.iconCircle}>
@@ -93,18 +201,21 @@ const FoodButtons = ({ foodEntry: { foodEntries } }) => {
               ) : (
                 <FontAwesome5
                   name='cookie-bite'
-                  style={foodEntries.food.snack1.length > 0 ? styles.iconFilled : styles.icon}
+                  style={
+                    foodEntries.food.snack1.length > 0 ||
+                    (foodEntries.skip && foodEntries.skip.skipSnack1)
+                      ? styles.iconFilled
+                      : styles.icon
+                  }
                 />
               )}
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() =>
-            NavigationService.navigate('AddFood', {
-              title: 'Snack',
-            })
-          }>
+          onPress={() => {
+            onClickHandler('Snack2');
+          }}>
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Snack</Text>
             <View style={styles.iconCircle}>
@@ -113,18 +224,21 @@ const FoodButtons = ({ foodEntry: { foodEntries } }) => {
               ) : (
                 <FontAwesome5
                   name='cookie-bite'
-                  style={foodEntries.food.snack2.length > 0 ? styles.iconFilled : styles.icon}
+                  style={
+                    foodEntries.food.snack2.length > 0 ||
+                    (foodEntries.skip && foodEntries.skip.skipSnack2)
+                      ? styles.iconFilled
+                      : styles.icon
+                  }
                 />
               )}
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() =>
-            NavigationService.navigate('AddFood', {
-              title: 'Snack',
-            })
-          }>
+          onPress={() => {
+            onClickHandler('Snack3');
+          }}>
           <View style={styles.columnContainer}>
             <Text style={styles.title}>Snack</Text>
             <View style={styles.iconCircle}>
@@ -133,7 +247,12 @@ const FoodButtons = ({ foodEntry: { foodEntries } }) => {
               ) : (
                 <FontAwesome5
                   name='cookie-bite'
-                  style={foodEntries.food.snack3.length > 0 ? styles.iconFilled : styles.icon}
+                  style={
+                    foodEntries.food.snack3.length > 0 ||
+                    (foodEntries.skip && foodEntries.skip.skipSnack3)
+                      ? styles.iconFilled
+                      : styles.icon
+                  }
                 />
               )}
             </View>
@@ -189,4 +308,4 @@ const mapStateToProps = (state) => ({
   foodEntry: state.foodEntry,
 });
 
-export default connect(mapStateToProps, {})(FoodButtons);
+export default connect(mapStateToProps, { setMoment })(FoodButtons);

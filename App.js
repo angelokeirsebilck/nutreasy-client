@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import * as AppAuth from 'expo-app-auth';
 import { AsyncStorage } from 'react-native';
+import { HeaderBackButton } from 'react-navigation-stack';
 
 // Icons
 import { Entypo } from '@expo/vector-icons';
@@ -25,17 +26,13 @@ import LandingScreen from './src/screens/LandingScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
-import FoodScreen from './src/screens/FoodScreen';
-import SearchFood from './src/screens/SearchFoodScreen';
-import FavoFood from './src/screens/FavoFoodScreen';
-import OwnFoodScreen from './src/screens/OwnFoodScreen';
-import NewFoodScreen from './src/screens/NewFoodScreen';
 
 // Navigation
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import NavigationService from './NavigationService';
+import FoodStack from './src/navigation/FoodStack';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -48,68 +45,6 @@ const LandingStack = createStackNavigator(
   },
   {
     initialRouteName: 'Landing',
-  }
-);
-
-const FoodStack = createStackNavigator(
-  {
-    Food: {
-      screen: FoodScreen,
-    },
-    NewFood2: {
-      screen: NewFoodScreen,
-    },
-    AddFood: {
-      screen: createMaterialTopTabNavigator(
-        {
-          Search: SearchFood,
-          Favo: FavoFood,
-          OwnFood: OwnFoodScreen,
-        },
-        {
-          initialRouteName: 'Search',
-
-          defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ focused, horizontal, tintColor }) => {
-              const { routeName } = navigation.state;
-              if (routeName === 'Search') {
-                return <FontAwesome name='search' size={24} color={tintColor} />;
-              } else if (routeName === 'Favo') {
-                return <FontAwesome name='star' size={24} color={tintColor} />;
-              } else if (routeName === 'OwnFood') {
-                return <FontAwesome name='home' size={24} color={tintColor} />;
-              }
-            },
-          }),
-          tabBarOptions: {
-            activeTintColor: BLUE_DARK,
-            inactiveTintColor: 'white',
-            showIcon: true,
-            showLabel: false,
-            style: {
-              backgroundColor: PRIMARY_COLOR,
-            },
-            indicatorStyle: {
-              backgroundColor: BLUE_DARK,
-              height: 3,
-            },
-          },
-        }
-      ),
-    },
-  },
-  {
-    initialRouteName: 'Food',
-    headerMode: 'screen',
-    defaultNavigationOptions: ({ navigation }) => ({
-      title: navigation.getParam('title'),
-      cardStyle: { backgroundColor: '#FFFFFF' },
-      headerTitleStyle: {
-        color: PRIMARY_COLOR,
-        fontFamily: 'Roboto_700Bold',
-        fontSize: 30,
-      },
-    }),
   }
 );
 

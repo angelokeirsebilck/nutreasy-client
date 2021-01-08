@@ -1,29 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, BackHandler } from 'react-native';
+import { HeaderBackButton } from 'react-navigation-stack';
+import { connect } from 'react-redux';
 
 // Colors
 import { PRIMARY_COLOR } from '../config/theme';
 
-// Navigatinnpm
+// Navigation
 import NavigationService from '../../NavigationService';
+
+// Components
 import DatePicker from '../components/food/DatePicker';
 import FoodButtons from '../components/food/FoodButtons';
 
-const FoodScreen = ({ navigation }) => {
-  // const [date, setDate] = useState(new Date(Date.now()));
+// Actions
 
-  const backAction = () => {
-    NavigationService.navigate('Home');
+import { clearSelectedFood } from '../actions/foodEntries';
+
+const FoodScreen = ({ navigation, clearSelectedFood }) => {
+  const backAction = ({}) => {
+    NavigationService.navigate.goBack();
   };
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      backAction();
+      NavigationService.navigate('Home');
       return true;
+    });
+
+    const isFocused = navigation.isFocused();
+    if (isFocused) {
+      clearSelectedFood();
+    }
+    // Load profile when homescreen is focused when switching screens.
+    const navFocusListener = navigation.addListener('didFocus', () => {
+      clearSelectedFood();
     });
 
     return () => {
       backHandler.remove();
+      navFocusListener.remove();
     };
   }, []);
 
@@ -61,6 +77,9 @@ FoodScreen.navigationOptions = () => {
       fontSize: 30,
       paddingLeft: 5,
     },
+    headerLeft: () => {
+      return <HeaderBackButton onPress={() => NavigationService.navigate('Home')} />;
+    },
   };
 };
-export default FoodScreen;
+export default connect(null, { clearSelectedFood })(FoodScreen);

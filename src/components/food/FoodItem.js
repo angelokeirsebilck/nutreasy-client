@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
 // Icons
 import { AntDesign } from '@expo/vector-icons';
@@ -9,6 +10,9 @@ import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../config/theme';
 
 // Navigation
 import NavigationService from '../../../NavigationService';
+
+// Actions
+import { setSelectedFood, removeSelectedFood } from '../../actions/foodEntries';
 
 const FoodItem = ({
   id,
@@ -20,7 +24,21 @@ const FoodItem = ({
   protein,
   fat,
   favorite,
+  setSelectedFood,
+  removeSelectedFood,
 }) => {
+  const [selected, setSelected] = useState(false);
+
+  const toggle = () => {
+    if (selected) {
+      removeSelectedFood(id);
+    } else {
+      setSelectedFood(id, name, calories, unit, measurementDescription, carbs, protein, fat, 1);
+    }
+
+    setSelected(!selected);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.info}>
@@ -42,16 +60,26 @@ const FoodItem = ({
               },
             })
           }>
-          <Text style={styles.name}>{name}</Text>
+          <Text style={selected ? styles.nameSelected : styles.name}>{name}</Text>
           <View style={styles.infoText}>
-            <Text style={styles.calories}>{calories} kcal</Text>
-            <Text style={styles.calories}> {unit} </Text>
-            <Text style={styles.calories}>{measurementDescription}</Text>
+            <Text style={selected ? styles.caloriesSelected : styles.calories}>
+              {calories} kcal
+            </Text>
+            <Text style={selected ? styles.caloriesSelected : styles.calories}> {unit} </Text>
+            <Text style={selected ? styles.caloriesSelected : styles.calories}>
+              {measurementDescription}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
 
-      <AntDesign name='checkcircle' style={styles.iconStyle} />
+      <TouchableOpacity>
+        <AntDesign
+          name='checkcircle'
+          style={selected ? styles.iconStyleChecked : styles.iconStyle}
+          onPress={() => toggle()}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -73,8 +101,15 @@ const styles = StyleSheet.create({
   name: {
     color: PRIMARY_COLOR,
   },
+  nameSelected: {
+    color: SECONDARY_COLOR,
+  },
   calories: {
     color: PRIMARY_COLOR,
+    fontSize: 10,
+  },
+  caloriesSelected: {
+    color: SECONDARY_COLOR,
     fontSize: 10,
   },
   iconStyle: {
@@ -91,4 +126,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-export default FoodItem;
+export default connect(null, { setSelectedFood, removeSelectedFood })(FoodItem);

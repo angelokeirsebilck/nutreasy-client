@@ -1,6 +1,7 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
+import { HeaderBackButton } from 'react-navigation';
 
 // Colors
 import { PRIMARY_COLOR, GREY } from '../config/theme';
@@ -11,8 +12,25 @@ import { Entypo } from '@expo/vector-icons';
 // Components
 import FoodItem from '../components/food/FoodItem';
 
-const OwnFoodScreen = ({ navigation, food }) => {
+// Actions
+import { clearSelectedFood } from '../actions/foodEntries';
+
+// Navigation
+import NavigationService from '../../NavigationService';
+
+const OwnFoodScreen = ({ clearSelectedFood, navigation, food }) => {
   let sortedFood = food.food.sort((a, b) => (a.name > b.name ? 1 : -1));
+  let filteredFood = sortedFood.filter((food) => food.favorite == false);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      NavigationService.navigate('Food');
+      return true;
+    });
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
 
   return (
     <View>
@@ -30,7 +48,7 @@ const OwnFoodScreen = ({ navigation, food }) => {
         </TouchableOpacity>
         <FlatList
           style={styles.foodList}
-          data={sortedFood}
+          data={filteredFood}
           showsVerticalScrollIndicator={false}
           keyExtractor={(food) => food._id}
           renderItem={({ item }) => (
@@ -82,4 +100,10 @@ const mapStateToProps = (state) => ({
   food: state.food,
 });
 
-export default connect(mapStateToProps)(OwnFoodScreen);
+// OwnFoodScreen.navigationOptions = () => {
+//   return {
+//     header: () => null,
+//   };
+// };
+
+export default connect(mapStateToProps, { clearSelectedFood })(OwnFoodScreen);
