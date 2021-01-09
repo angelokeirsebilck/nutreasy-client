@@ -6,6 +6,7 @@ import {
   REMOVE_ERROR,
   SET_BMR,
   SET_CALORIES,
+  SET_LOADING_PROFILE,
 } from '../actions/types';
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   errors: [],
   BMR: null,
   calories: null,
+  loading: true,
 };
 
 export default function (state = initialState, action) {
@@ -31,6 +33,7 @@ export default function (state = initialState, action) {
         BMR: null,
         calories: null,
         errors: [],
+        loading: true,
       };
     case ADD_ERROR:
       let newArray = [
@@ -54,6 +57,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         BMR: payload,
+      };
+    case SET_LOADING_PROFILE:
+      return {
+        ...state,
+        loading: payload,
       };
     case SET_CALORIES:
       let calories = parseFloat((state.BMR * payload).toFixed(0));

@@ -8,9 +8,10 @@ import {
   CLEAR_SELECTED_FOOD,
   SET_AMOUNT,
   SET_SELECTED_FOOD_LIST,
-  SET_LOADING_FALSE,
+  SET_LOADING_FOOD_ENTRIES,
   CALC_TOTALS_DONE,
   SET_HOME_TOTALS,
+  SET_LOADING_PROFILE,
 } from './types';
 
 import axios from 'axios';
@@ -25,6 +26,15 @@ export const getFoodEntries = (
   date = `${dateOnLoad.getDate()}-${dateOnLoad.getMonth() + 1}-${dateOnLoad.getFullYear()}`
 ) => async (dispatch) => {
   try {
+    dispatch({
+      type: SET_LOADING_PROFILE,
+      payload: true,
+    });
+    dispatch({
+      type: SET_LOADING_FOOD_ENTRIES,
+      payload: true,
+    });
+
     const config = {
       headers: {
         'Content-Type': 'application/json',

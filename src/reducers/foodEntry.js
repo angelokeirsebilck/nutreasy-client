@@ -8,9 +8,9 @@ import {
   SET_AMOUNT,
   CLEAR_FOOD_ENTRIES,
   SET_SELECTED_FOOD_LIST,
-  SET_LOADING_FALSE,
   CALC_TOTALS_DONE,
   SET_HOME_TOTALS,
+  SET_LOADING_FOOD_ENTRIES,
 } from '../actions/types';
 
 var nowDate = new Date(Date.now());
@@ -42,6 +42,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         foodEntries: payload,
+        loading: false,
       };
     case SET_DATE:
       return {
@@ -96,7 +97,7 @@ export default function (state = initialState, action) {
         selectedFood: newSelectedFood,
       };
 
-    case SET_LOADING_FALSE:
+    case SET_LOADING_FOOD_ENTRIES:
       return {
         ...state,
         loading: payload,

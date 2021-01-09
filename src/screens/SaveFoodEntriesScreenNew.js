@@ -24,7 +24,7 @@ import DoneButton from '../components/food/DoneButton';
 // Utils
 import { ucFirst } from '../utils/ucFirst';
 
-const SaveFoodEntriesScreen = ({
+const SaveFoodEntriesScreenNew = ({
   navigation,
   foodEntry: {
     selectedFood,
@@ -52,123 +52,6 @@ const SaveFoodEntriesScreen = ({
     setSelectedFoodList(selectedFood);
   };
 
-  const transformDbEntries = () => {
-    let selectedFood = [];
-
-    switch (moment) {
-      case 'breakfast':
-        if (food.breakfast.length > 0) {
-          food.breakfast.forEach((item) => {
-            const selectedFoodItem = {
-              name: item.foodItem.name,
-              measurementDescription: item.foodItem.measurement_description,
-              unit: item.foodItem.number_of_units,
-              carbs: item.foodItem.carbohydrate,
-              protein: item.foodItem.protein,
-              fat: item.foodItem.fat,
-              amount: item.amount,
-              foodItem: item.foodItem._id,
-              calories: item.foodItem.calories,
-            };
-            selectedFood.push(selectedFoodItem);
-          });
-        }
-        break;
-      case 'lunch':
-        if (food.lunch.length > 0) {
-          food.lunch.forEach((item) => {
-            const selectedFoodItem = {
-              name: item.foodItem.name,
-              measurementDescription: item.foodItem.measurement_description,
-              unit: item.foodItem.number_of_units,
-              carbs: item.foodItem.carbohydrate,
-              protein: item.foodItem.protein,
-              fat: item.foodItem.fat,
-              amount: item.amount,
-              foodItem: item.foodItem._id,
-              calories: item.foodItem.calories,
-            };
-            selectedFood.push(selectedFoodItem);
-          });
-        }
-        break;
-      case 'dinner':
-        if (food.dinner.length > 0) {
-          food.dinner.forEach((item) => {
-            const selectedFoodItem = {
-              name: item.foodItem.name,
-              measurementDescription: item.foodItem.measurement_description,
-              unit: item.foodItem.number_of_units,
-              carbs: item.foodItem.carbohydrate,
-              protein: item.foodItem.protein,
-              fat: item.foodItem.fat,
-              amount: item.amount,
-              foodItem: item.foodItem._id,
-              calories: item.foodItem.calories,
-            };
-            selectedFood.push(selectedFoodItem);
-          });
-        }
-        break;
-      case 'snack1':
-        if (food.snack1.length > 0) {
-          food.snack1.forEach((item) => {
-            const selectedFoodItem = {
-              name: item.foodItem.name,
-              measurementDescription: item.foodItem.measurement_description,
-              unit: item.foodItem.number_of_units,
-              carbs: item.foodItem.carbohydrate,
-              protein: item.foodItem.protein,
-              fat: item.foodItem.fat,
-              amount: item.amount,
-              foodItem: item.foodItem._id,
-              calories: item.foodItem.calories,
-            };
-            selectedFood.push(selectedFoodItem);
-          });
-        }
-        break;
-      case 'snack2':
-        if (food.snack2.length > 0) {
-          food.snack2.forEach((item) => {
-            const selectedFoodItem = {
-              name: item.foodItem.name,
-              measurementDescription: item.foodItem.measurement_description,
-              unit: item.foodItem.number_of_units,
-              carbs: item.foodItem.carbohydrate,
-              protein: item.foodItem.protein,
-              fat: item.foodItem.fat,
-              amount: item.amount,
-              foodItem: item.foodItem._id,
-              calories: item.foodItem.calories,
-            };
-            selectedFood.push(selectedFoodItem);
-          });
-        }
-        break;
-      case 'snack3':
-        if (food.snack3.length > 0) {
-          food.snack3.forEach((item) => {
-            const selectedFoodItem = {
-              name: item.foodItem.name,
-              measurementDescription: item.foodItem.measurement_description,
-              unit: item.foodItem.number_of_units,
-              carbs: item.foodItem.carbohydrate,
-              protein: item.foodItem.protein,
-              fat: item.foodItem.fat,
-              amount: item.amount,
-              foodItem: item.foodItem._id,
-              calories: item.foodItem.calories,
-            };
-            selectedFood.push(selectedFoodItem);
-          });
-        }
-        break;
-    }
-
-    setSelectedFoodList(selectedFood);
-  };
-
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       navigation.goBack();
@@ -176,24 +59,8 @@ const SaveFoodEntriesScreen = ({
     });
     setSelectedFoodList(selectedFood);
 
-    let loadItems = navigation.getParam('loadItems');
-    if (loadItems) transformDbEntries();
-
-    const isFocused = navigation.isFocused();
-    if (isFocused) {
-      if (!loadItems) setSelectedFoodList(selectedFood);
-    }
-
-    // Load profile when homescreen is focused when switching screens.
-    const navFocusListener = navigation.addListener('didFocus', () => {
-      if (!loadItems) {
-        setSelectedFoodList(selectedFood);
-      }
-    });
-
     return () => {
       backHandler.remove();
-      navFocusListener.remove();
     };
   }, []);
   return (
@@ -390,7 +257,7 @@ const mapStateToProps = (state) => ({
   foodEntry: state.foodEntry,
 });
 
-SaveFoodEntriesScreen.navigationOptions = ({ navigation }) => {
+SaveFoodEntriesScreenNew.navigationOptions = ({ navigation }) => {
   return {
     headerLeft: () => {
       return <HeaderBackButton onPress={() => navigation.goBack()} />;
@@ -406,4 +273,4 @@ export default connect(mapStateToProps, {
   setSelectedFoodList,
   setLoadingFalse,
   calcTotals,
-})(SaveFoodEntriesScreen);
+})(SaveFoodEntriesScreenNew);

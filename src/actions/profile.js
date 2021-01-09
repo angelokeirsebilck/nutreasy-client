@@ -6,6 +6,7 @@ import {
   SET_BMR,
   SET_CALORIES,
   CLEAR_PROFILE,
+  SET_LOADING_PROFILE,
 } from './types';
 import axios from 'axios';
 import { API_URL } from '../config/settings';
@@ -20,11 +21,19 @@ import calcBMR from '../utils/BMRCalculator';
 import { getFood } from '../actions/food';
 
 export const loadProfile = () => async (dispatch) => {
+  dispatch({
+    type: SET_LOADING_PROFILE,
+    payload: true,
+  });
   try {
     const res = await axios.get(`${API_URL}/api/profile/me`);
     dispatch({
       type: LOAD_PROFILE,
       payload: res.data,
+    });
+    dispatch({
+      type: SET_LOADING_PROFILE,
+      payload: false,
     });
     dispatch(
       setBmr(
@@ -40,6 +49,10 @@ export const loadProfile = () => async (dispatch) => {
     dispatch(getFood());
   } catch (error) {
     console.log(error);
+    dispatch({
+      type: SET_LOADING_PROFILE,
+      payload: false,
+    });
   }
 };
 

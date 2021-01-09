@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, BackHandler, Button } from 'react-native';
+import { StyleSheet, Text, View, BackHandler, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import * as AppAuth from 'expo-app-auth';
 import { AsyncStorage } from 'react-native';
 
 // Colors
-import { PRIMARY_COLOR } from '../config/theme';
+import { PRIMARY_COLOR, GREY } from '../config/theme';
 
 // Actions
 import { logout, loadFatToken } from '../actions/auth';
@@ -26,25 +26,35 @@ const HomeScreen = ({
   loadFatToken,
   getFoodEntries,
   foodEntry: { date },
+  profile,
 }) => {
   useEffect(() => {
     if (!auth.isAuthenticated) {
       navigation.navigate('Landing');
     }
+
+    var dateOnLoad = new Date(Date.now());
+
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
-    getFoodEntries(`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`);
+    getFoodEntries(
+      `${dateOnLoad.getDate()}-${dateOnLoad.getMonth() + 1}-${dateOnLoad.getFullYear()}`
+    );
     loadFatToken();
     // Load profile when homescreen is focus on init.
     const isFocused = navigation.isFocused();
     if (isFocused) {
       loadProfile();
-      getFoodEntries(`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`);
+      getFoodEntries(
+        `${dateOnLoad.getDate()}-${dateOnLoad.getMonth() + 1}-${dateOnLoad.getFullYear()}`
+      );
     }
 
     // Load profile when homescreen is focused when switching screens.
     const navFocusListener = navigation.addListener('didFocus', () => {
       loadProfile();
-      getFoodEntries(`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`);
+      getFoodEntries(
+        `${dateOnLoad.getDate()}-${dateOnLoad.getMonth() + 1}-${dateOnLoad.getFullYear()}`
+      );
     });
 
     return () => {
@@ -53,9 +63,22 @@ const HomeScreen = ({
     };
   }, []);
 
-  return (
-    <View style={styles.container}>{calories !== null ? <Food calories={calories} /> : null}</View>
+  const loader = <ActivityIndicator size='large' color={PRIMARY_COLOR} />;
+  const noProfileFoundContent = (
+    <Text style={styles.noProfileStyle}>
+      No profile found. Please fill in and save profile first.
+    </Text>
   );
+
+  let content = loader;
+  let foodContent = calories !== null ? <Food calories={calories} /> : null;
+
+  if (!profile.loading) {
+    content = foodContent;
+    if (profile.profile == null) content = noProfileFoundContent;
+  }
+
+  return <View style={styles.container}>{content}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -73,11 +96,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: PRIMARY_COLOR,
   },
+  noProfileStyle: {
+    color: PRIMARY_COLOR,
+  },
 });
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile.profile,
+  profile: state.profile,
   calories: state.profile.calories,
   foodEntry: state.foodEntry,
 });

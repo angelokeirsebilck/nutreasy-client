@@ -147,17 +147,21 @@ const UserData = ({
           }}
           onEndEditing={(e) => validateHeight(e.nativeEvent.text)}
           style={[
-            styles.groupFieldData,
-            { flex: 1, borderTopRightRadius: 0, borderBottomRightRadius: 0, borderRightWidth: 0 },
+            styles.txtValueStyle,
+            {
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+              borderRightWidth: 0,
+            },
           ]}
         />
         <View
           style={[
-            styles.groupFieldData,
+            styles.selectStyle,
             {
               paddingHorizontal: 0,
               paddingLeft: 4,
-              flex: 2,
+
               borderTopLeftRadius: 0,
               borderBottomLeftRadius: 0,
               borderLeftWidth: 0,
@@ -189,9 +193,8 @@ const UserData = ({
           }}
           onEndEditing={(e) => validateWeight(e.nativeEvent.text)}
           style={[
-            styles.groupFieldData,
+            styles.txtValueStyle,
             {
-              flex: 1,
               borderTopRightRadius: 0,
               borderBottomRightRadius: 0,
               borderRightWidth: 0,
@@ -200,11 +203,11 @@ const UserData = ({
         />
         <View
           style={[
-            styles.groupFieldData,
+            styles.selectStyle,
             {
               paddingHorizontal: 0,
               paddingLeft: 4,
-              flex: 2,
+
               borderTopLeftRadius: 0,
               borderBottomLeftRadius: 0,
               borderLeftWidth: 0,
@@ -286,6 +289,25 @@ const styles = StyleSheet.create({
     color: PRIMARY_COLOR,
     fontFamily: 'Roboto_400Regular',
     fontSize: 16,
+  },
+  txtValueStyle: {
+    flex: 2,
+    height: 40,
+    borderRadius: 10,
+    borderColor: PRIMARY_COLOR,
+    borderWidth: 2,
+    backgroundColor: 'white',
+    color: PRIMARY_COLOR,
+    paddingHorizontal: 10,
+  },
+  selectStyle: {
+    flex: 9,
+    height: 40,
+    borderRadius: 10,
+    borderColor: PRIMARY_COLOR,
+    borderWidth: 2,
+    backgroundColor: 'white',
+    textAlign: 'right',
   },
   groupFieldData: {
     flex: 1,

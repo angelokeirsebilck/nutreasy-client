@@ -31,6 +31,7 @@ const OwnFoodScreen = ({ clearSelectedFood, navigation, food }) => {
       backHandler.remove();
     };
   }, []);
+  const noFoodFound = <Text style={styles.noFoodStyle}>No food found. Please add food.</Text>;
 
   return (
     <View>
@@ -46,25 +47,29 @@ const OwnFoodScreen = ({ clearSelectedFood, navigation, food }) => {
           <Entypo name='squared-plus' style={styles.plusIcon} />
           <Text style={styles.newFood}>New Food</Text>
         </TouchableOpacity>
-        <FlatList
-          style={styles.foodList}
-          data={filteredFood}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(food) => food._id}
-          renderItem={({ item }) => (
-            <FoodItem
-              id={item._id}
-              name={item.name}
-              calories={item.calories}
-              carbs={item.carbohydrate}
-              protein={item.protein}
-              fat={item.fat}
-              unit={item.number_of_units}
-              measurementDescription={item.measurement_description}
-              favorite={item.favorite}
-            />
-          )}
-        />
+        {filteredFood.length == 0 ? (
+          noFoodFound
+        ) : (
+          <FlatList
+            style={styles.foodList}
+            data={filteredFood}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(food) => food._id}
+            renderItem={({ item }) => (
+              <FoodItem
+                id={item._id}
+                name={item.name}
+                calories={item.calories}
+                carbs={item.carbohydrate}
+                protein={item.protein}
+                fat={item.fat}
+                unit={item.number_of_units}
+                measurementDescription={item.measurement_description}
+                favorite={item.favorite}
+              />
+            )}
+          />
+        )}
       </View>
     </View>
   );
@@ -76,6 +81,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
     marginBottom: 80,
+  },
+  noFoodStyle: {
+    color: PRIMARY_COLOR,
+    marginTop: 20,
   },
   newFoodContainer: {
     display: 'flex',

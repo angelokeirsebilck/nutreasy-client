@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View, BackHandler } from 'react-native';
+import { Button, StyleSheet, Text, View, BackHandler, ActivityIndicator } from 'react-native';
 import { HeaderBackButton } from 'react-navigation-stack';
 import { connect } from 'react-redux';
 
@@ -17,7 +17,7 @@ import FoodButtons from '../components/food/FoodButtons';
 
 import { clearSelectedFood } from '../actions/foodEntries';
 
-const FoodScreen = ({ navigation, clearSelectedFood }) => {
+const FoodScreen = ({ navigation, clearSelectedFood, foodEntry: { loading } }) => {
   const backAction = ({}) => {
     NavigationService.navigate.goBack();
   };
@@ -43,10 +43,12 @@ const FoodScreen = ({ navigation, clearSelectedFood }) => {
     };
   }, []);
 
+  const loader = <ActivityIndicator size='large' color={PRIMARY_COLOR} style={{ marginTop: 20 }} />;
+
   return (
     <View style={styles.container}>
       <DatePicker />
-      <FoodButtons />
+      {loading ? loader : <FoodButtons />}
     </View>
   );
 };
@@ -82,4 +84,9 @@ FoodScreen.navigationOptions = () => {
     },
   };
 };
-export default connect(null, { clearSelectedFood })(FoodScreen);
+
+const mapStateToProps = (state) => ({
+  foodEntry: state.foodEntry,
+});
+
+export default connect(mapStateToProps, { clearSelectedFood })(FoodScreen);

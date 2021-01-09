@@ -7,6 +7,7 @@ import { HeaderBackButton } from 'react-navigation-stack';
 import FoodScreen from '../screens/FoodScreen';
 import NewFoodScreen from '../screens/NewFoodScreen';
 import SaveFoodEntries from '../screens/SaveFoodEntriesScreen';
+import SaveFoodEntriesScreen from '../screens/SaveFoodEntriesScreenNew';
 
 // Navigation
 import AddFoodTabNavigator from '../../src/navigation/AddFoodTabNavigator';
@@ -24,6 +25,9 @@ const FoodStack = createStackNavigator(
     },
     SaveFood: {
       screen: SaveFoodEntries,
+    },
+    SaveFoodNew: {
+      screen: SaveFoodEntriesScreen,
     },
     NewFood2: {
       screen: NewFoodScreen,

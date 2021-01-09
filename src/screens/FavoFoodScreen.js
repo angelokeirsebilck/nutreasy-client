@@ -11,28 +11,34 @@ import FoodItem from '../components/food/FoodItem';
 const FavoFood = ({ navigation, food }) => {
   let filteredFood = food.food.filter((food) => food.favorite == true);
   let sortedFood = filteredFood.sort((a, b) => (a.name > b.name ? 1 : -1));
+
+  const noFavoFoodFound = <Text style={styles.noFavoStyle}>No favorite food found.</Text>;
   return (
     <View>
       <View style={styles.container}>
-        <FlatList
-          style={styles.foodList}
-          data={sortedFood}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(food) => food._id}
-          renderItem={({ item }) => (
-            <FoodItem
-              id={item._id}
-              name={item.name}
-              calories={item.calories}
-              carbs={item.carbohydrate}
-              protein={item.protein}
-              fat={item.fat}
-              unit={item.number_of_units}
-              measurementDescription={item.measurement_description}
-              favorite={item.favorite}
-            />
-          )}
-        />
+        {sortedFood.length == 0 ? (
+          noFavoFoodFound
+        ) : (
+          <FlatList
+            style={styles.foodList}
+            data={sortedFood}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(food) => food._id}
+            renderItem={({ item }) => (
+              <FoodItem
+                id={item._id}
+                name={item.name}
+                calories={item.calories}
+                carbs={item.carbohydrate}
+                protein={item.protein}
+                fat={item.fat}
+                unit={item.number_of_units}
+                measurementDescription={item.measurement_description}
+                favorite={item.favorite}
+              />
+            )}
+          />
+        )}
       </View>
     </View>
   );
@@ -44,6 +50,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
     marginBottom: 80,
+  },
+  noFavoStyle: {
+    color: PRIMARY_COLOR,
   },
   newFoodContainer: {
     display: 'flex',
