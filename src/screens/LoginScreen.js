@@ -67,6 +67,7 @@ const LoginScreen = ({ navigation, loginUser, register, auth, alert }) => {
             value={password}
             style={password.length > 0 ? styles.inputStyle : styles.placeholderStyle}
             placeholder='password'
+            secureTextEntry={true}
             placeholderTextColor={PRIMARY_COLOR}
             onChangeText={(password) => setPassword(password)}
             autoCapitalize='none'
@@ -129,6 +130,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_400Regular',
     marginBottom: 30,
     fontSize: 16,
+    borderWidth: 2,
+    borderColor: PRIMARY_COLOR,
   },
   placeholderStyle: {
     display: 'flex',
@@ -143,6 +146,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_300Light_Italic',
     marginBottom: 30,
     fontSize: 16,
+    borderWidth: 2,
+    borderColor: PRIMARY_COLOR,
   },
   bottomTextStyle: {
     fontFamily: 'Roboto_400Regular',
