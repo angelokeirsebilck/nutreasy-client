@@ -5,7 +5,11 @@
 Client for Nutreasy app. Nutreasy lets you keep track of your food macros.
 
 ## Images
-<img src="https://github.com/angelokeirsebilck/nutreasy-client/blob/develop/Images/nutreasy1.jpeg" width="200" height="600" /
+<p float="left">
+  <img src="https://github.com/angelokeirsebilck/nutreasy-client/blob/develop/Images/nutreasy1.jpeg" width="200" height="600" />
+<img src="https://github.com/angelokeirsebilck/nutreasy-client/blob/develop/Images/nutreasy2.jpeg" width="200" height="600" />
+</p>
+
 
 
 
