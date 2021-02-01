@@ -73,19 +73,23 @@ const SaveFoodEntriesScreenNew = ({
                 </View>
                 <View style={styles.groupFields}>
                     <Text style={styles.groupFieldName}>Calories </Text>
-                    <Text style={styles.groupFieldData}>{totalsMoment.caloriesTotal}</Text>
+                    <Text style={styles.groupFieldData}>
+                        {totalsMoment.caloriesTotal.toFixed(2)}
+                    </Text>
                 </View>
                 <View style={styles.groupFields}>
                     <Text style={styles.groupFieldName}>Carbohydrates (g) </Text>
-                    <Text style={styles.groupFieldData}>{totalsMoment.carbsTotal}</Text>
+                    <Text style={styles.groupFieldData}>{totalsMoment.carbsTotal.toFixed(2)}</Text>
                 </View>
                 <View style={styles.groupFields}>
                     <Text style={styles.groupFieldName}>Protein (g) </Text>
-                    <Text style={styles.groupFieldData}>{totalsMoment.proteinTotal}</Text>
+                    <Text style={styles.groupFieldData}>
+                        {totalsMoment.proteinTotal.toFixed(2)}
+                    </Text>
                 </View>
                 <View style={styles.groupFields}>
                     <Text style={styles.groupFieldName}>Fat (g) </Text>
-                    <Text style={styles.groupFieldData}>{totalsMoment.fatTotal}</Text>
+                    <Text style={styles.groupFieldData}>{totalsMoment.fatTotal.toFixed(2)}</Text>
                 </View>
             </View>
 
