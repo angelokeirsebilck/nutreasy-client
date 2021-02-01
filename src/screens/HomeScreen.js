@@ -14,7 +14,7 @@ import { getFoodEntries } from '../actions/foodEntries';
 
 // Components
 import Food from '../components/home/Food';
-
+import Alert from '../components/Alert';
 // Navigation
 import { withNavigation } from 'react-navigation';
 
@@ -78,7 +78,12 @@ const HomeScreen = ({
     if (profile.profile == null) content = noProfileFoundContent;
   }
 
-  return <View style={styles.container}>{content}</View>;
+  return (
+    <View style={styles.container}>
+      <Alert />
+      {content}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
