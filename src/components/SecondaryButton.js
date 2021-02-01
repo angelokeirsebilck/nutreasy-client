@@ -5,43 +5,42 @@ import PropTypes from 'prop-types';
 import { PRIMARY_COLOR, GREY } from '../config/theme';
 
 const SecondaryButton = ({ text, disabled }) => {
-  return (
-    <View style={disabled ? styles.btnContainerDisabled : styles.btnContainer}>
-      <Text style={styles.textStyle}>{text}</Text>
-    </View>
-  );
+    return (
+        <View style={disabled ? styles.btnContainerDisabled : styles.btnContainer}>
+            <Text style={styles.textStyle}>{text}</Text>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  btnContainerDisabled: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: 240,
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: GREY,
-    paddingVertical: 14,
-  },
-  btnContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: 240,
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: PRIMARY_COLOR,
-    paddingVertical: 14,
-  },
-  textStyle: {
-    fontSize: 24,
-    color: 'white',
-    fontFamily: 'Roboto_700Bold',
-  },
+    btnContainerDisabled: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minWidth: 240,
+        borderRadius: 10,
+        backgroundColor: GREY,
+        paddingVertical: 9,
+    },
+    btnContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minWidth: 240,
+        height: 50,
+        borderRadius: 10,
+        backgroundColor: PRIMARY_COLOR,
+        paddingVertical: 9,
+    },
+    textStyle: {
+        fontSize: 24,
+        color: 'white',
+        fontFamily: 'Roboto_700Bold',
+    },
 });
 
 SecondaryButton.propTypes = {
-  text: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
 };
 
 export default SecondaryButton;
