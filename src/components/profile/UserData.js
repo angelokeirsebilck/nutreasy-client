@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Platform } from 'react-native';
+import ModalSelector from 'react-native-modal-selector';
 
 // Colors
 import { PRIMARY_COLOR, RED } from '../../config/theme';
@@ -103,6 +104,101 @@ const UserData = ({
             heightError = null;
         }
     };
+    const initialGender = gender == 'male' ? 'Male' : 'Female';
+    const genderData = [
+        {
+            key: 1,
+            label: 'Male',
+            value: 'male',
+        },
+        {
+            key: 2,
+            label: 'Female',
+            value: 'female',
+        },
+    ];
+
+    const initialHeightUnit = heightUnit == 'feet' ? 'Ft' : 'Cm';
+    const heightData = [
+        {
+            key: 1,
+            label: 'Ft',
+            value: 'feet',
+        },
+        {
+            key: 2,
+            label: 'Cm',
+            value: 'cm',
+        },
+    ];
+
+    const initialWeightUnit = weightUnit == 'kg' ? 'Kg' : 'Lb';
+    const weightUnitData = [
+        {
+            key: 1,
+            label: 'Kg',
+            value: 'kg',
+        },
+        {
+            key: 2,
+            label: 'Lb',
+            value: 'lb',
+        },
+    ];
+
+    let inittialActivityLevel;
+    switch (activityLevel) {
+        case 1.2:
+            inittialActivityLevel = 'Little or no exercise';
+            break;
+        case 1.4:
+            inittialActivityLevel = '1-2 days/week';
+            break;
+        case 1.6:
+            inittialActivityLevel = '2-3 days/week';
+            break;
+        case 1.75:
+            inittialActivityLevel = '4-5 days/week';
+            break;
+        case 2:
+            inittialActivityLevel = '6-7 days/week';
+            break;
+        case 2.3:
+            inittialActivityLevel = 'Professional athlete';
+            break;
+    }
+    const activityLevelData = [
+        {
+            key: 1,
+            label: 'Little or no exercise',
+            value: 1.2,
+        },
+        {
+            key: 2,
+            label: '1-2 days/week',
+            value: 1.4,
+        },
+        {
+            key: 3,
+            label: '2-3 days/week',
+            value: 1.6,
+        },
+        {
+            key: 4,
+            label: '4-5 days/week',
+            value: 1.75,
+        },
+        {
+            key: 5,
+            label: '6-7 days/week',
+            value: 2,
+        },
+        {
+            key: 6,
+            label: 'Professional athlete',
+            value: 2.3,
+        },
+    ];
 
     return (
         <View style={styles.groupContainer}>
@@ -110,7 +206,91 @@ const UserData = ({
                 <Ionicons style={styles.subTitleIcon} name='settings' />
                 <Text style={styles.subTitle}>User Data</Text>
             </View>
-            <View style={styles.groupFields}>
+            {/* <View style={styles.groupFieldsNew}>
+                <Text style={styles.groupFieldName}>Gender </Text>
+                <Picker
+                    style={{
+                        fontFamily: 'Roboto_400Regular',
+                        color: PRIMARY_COLOR,
+                        borderColor: PRIMARY_COLOR,
+                        borderWidth: 2,
+                        borderRadius: 10,
+                    }}
+                    itemStyle={{
+                        fontFamily: 'Roboto_400Regular',
+                        color: PRIMARY_COLOR,
+                        // borderColor: PRIMARY_COLOR,
+                        // borderWidth: 2,
+                        // borderRadius: 10,
+                    }}
+                    selectedValue={gender}
+                    onValueChange={(itemValue, itemIndex) => setGender(itemValue)}>
+                    <Picker.Item label='Male' value='male' />
+                    <Picker.Item label='Female' value='female' />
+                </Picker>
+            </View> */}
+            {Platform.OS == 'ios' ? (
+                <View style={styles.groupFields}>
+                    <Text style={styles.groupFieldName}>Gender </Text>
+                    <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
+                        <ModalSelector
+                            data={genderData}
+                            initValue={initialGender}
+                            style={{
+                                // borderRadius: 10,
+                                // borderColor: PRIMARY_COLOR,
+                                // borderWidth: 2,
+                                width: '100%',
+                            }}
+                            initValueTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectStyle={{
+                                borderWidth: 0,
+                                width: '100%',
+                            }}
+                            touchableStyle={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                            }}
+                            onChange={(option) => {
+                                setGender(option.value);
+                            }}
+                        />
+                    </View>
+                </View>
+            ) : (
+                <View style={styles.groupFields}>
+                    <Text style={styles.groupFieldName}>Gender </Text>
+                    <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
+                        <Picker
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                fontFamily: 'Roboto_400Regular',
+                                color: PRIMARY_COLOR,
+                            }}
+                            itemStyle={{
+                                height: 40,
+                                fontFamily: 'Roboto_400Regular',
+                                color: PRIMARY_COLOR,
+                                marginHorizontal: 8,
+                                textAlign: 'left',
+                            }}
+                            selectedValue={gender}
+                            onValueChange={(itemValue, itemIndex) => setGender(itemValue)}>
+                            <Picker.Item label='Male' value='male' />
+                            <Picker.Item label='Female' value='female' />
+                        </Picker>
+                    </View>
+                </View>
+            )}
+
+            {/* <View style={styles.groupFields}>
                 <Text style={styles.groupFieldName}>Gender </Text>
                 <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
                     <Picker
@@ -133,7 +313,8 @@ const UserData = ({
                         <Picker.Item label='Female' value='female' />
                     </Picker>
                 </View>
-            </View>
+            </View> */}
+
             <View style={styles.groupFields}>
                 <Text style={styles.groupFieldName}>Age </Text>
                 <TextInput
@@ -149,119 +330,285 @@ const UserData = ({
                 />
             </View>
             {ageError}
-            <View style={styles.groupFields}>
-                <Text style={styles.groupFieldName}>Height </Text>
-                <TextInput
-                    value={height.toString()}
-                    keyboardType='numeric'
-                    onChangeText={(val) => {
-                        setHeight(val);
-                        validateHeight(val);
-                    }}
-                    onEndEditing={(e) => validateHeight(e.nativeEvent.text)}
-                    style={[
-                        styles.txtValueStyle,
-                        {
-                            borderTopRightRadius: 0,
-                            borderBottomRightRadius: 0,
-                            borderRightWidth: 0,
-                        },
-                    ]}
-                />
-                <View
-                    style={[
-                        styles.selectStyle,
-                        {
-                            paddingHorizontal: 0,
-                            paddingLeft: 4,
-
-                            borderTopLeftRadius: 0,
-                            borderBottomLeftRadius: 0,
-                            borderLeftWidth: 0,
-                        },
-                    ]}>
-                    <Picker
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            fontFamily: 'Roboto_400Regular',
-                            color: PRIMARY_COLOR,
+            {Platform.OS == 'ios' ? (
+                <View style={styles.groupFields}>
+                    <Text style={styles.groupFieldName}>Height </Text>
+                    <TextInput
+                        value={height.toString()}
+                        keyboardType='numeric'
+                        onChangeText={(val) => {
+                            setHeight(val);
+                            validateHeight(val);
                         }}
-                        selectedValue={heightUnit}
-                        onValueChange={(itemValue, itemIndex) => setHeightUnit(itemValue)}>
-                        <Picker.Item label='Cm' value='cm' />
-                        <Picker.Item label='Ft' value='feet' />
-                    </Picker>
+                        onEndEditing={(e) => validateHeight(e.nativeEvent.text)}
+                        style={[
+                            styles.txtValueStyle,
+                            {
+                                borderTopRightRadius: 0,
+                                borderBottomRightRadius: 0,
+                                borderRightWidth: 0,
+                            },
+                        ]}
+                    />
+                    <View
+                        style={[
+                            styles.selectStyle,
+                            {
+                                paddingHorizontal: 0,
+                                paddingLeft: 4,
+
+                                borderTopLeftRadius: 0,
+                                borderBottomLeftRadius: 0,
+                                borderLeftWidth: 0,
+                            },
+                        ]}>
+                        <ModalSelector
+                            data={heightData}
+                            initValue={initialHeightUnit}
+                            style={{
+                                // borderRadius: 10,
+                                // borderColor: PRIMARY_COLOR,
+                                // borderWidth: 2,
+                                width: '100%',
+                            }}
+                            initValueTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectStyle={{
+                                borderWidth: 0,
+                                width: '100%',
+                            }}
+                            touchableStyle={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                            }}
+                            onChange={(option) => {
+                                setHeightUnit(option.value);
+                            }}
+                        />
+                    </View>
                 </View>
-            </View>
+            ) : (
+                <View style={styles.groupFields}>
+                    <Text style={styles.groupFieldName}>Height </Text>
+                    <TextInput
+                        value={height.toString()}
+                        keyboardType='numeric'
+                        onChangeText={(val) => {
+                            setHeight(val);
+                            validateHeight(val);
+                        }}
+                        onEndEditing={(e) => validateHeight(e.nativeEvent.text)}
+                        style={[
+                            styles.txtValueStyle,
+                            {
+                                borderTopRightRadius: 0,
+                                borderBottomRightRadius: 0,
+                                borderRightWidth: 0,
+                            },
+                        ]}
+                    />
+                    <View
+                        style={[
+                            styles.selectStyle,
+                            {
+                                paddingHorizontal: 0,
+                                paddingLeft: 4,
+
+                                borderTopLeftRadius: 0,
+                                borderBottomLeftRadius: 0,
+                                borderLeftWidth: 0,
+                            },
+                        ]}>
+                        <Picker
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                fontFamily: 'Roboto_400Regular',
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectedValue={heightUnit}
+                            onValueChange={(itemValue, itemIndex) => setHeightUnit(itemValue)}>
+                            <Picker.Item label='Cm' value='cm' />
+                            <Picker.Item label='Ft' value='feet' />
+                        </Picker>
+                    </View>
+                </View>
+            )}
+
             {heightError}
-            <View style={styles.groupFields}>
-                <Text style={styles.groupFieldName}>Weight </Text>
-                <TextInput
-                    keyboardType='numeric'
-                    value={weight.toString()}
-                    onChangeText={(val) => {
-                        setWeight(val);
-                        validateWeight(val);
-                    }}
-                    onEndEditing={(e) => validateWeight(e.nativeEvent.text)}
-                    style={[
-                        styles.txtValueStyle,
-                        {
-                            borderTopRightRadius: 0,
-                            borderBottomRightRadius: 0,
-                            borderRightWidth: 0,
-                        },
-                    ]}
-                />
-                <View
-                    style={[
-                        styles.selectStyle,
-                        {
-                            paddingHorizontal: 0,
-                            paddingLeft: 4,
+            {Platform.OS == 'ios' ? (
+                <View style={styles.groupFields}>
+                    <Text style={styles.groupFieldName}>Weight </Text>
+                    <TextInput
+                        keyboardType='numeric'
+                        value={weight.toString()}
+                        onChangeText={(val) => {
+                            setWeight(val);
+                            validateWeight(val);
+                        }}
+                        onEndEditing={(e) => validateWeight(e.nativeEvent.text)}
+                        style={[
+                            styles.txtValueStyle,
+                            {
+                                borderTopRightRadius: 0,
+                                borderBottomRightRadius: 0,
+                                borderRightWidth: 0,
+                            },
+                        ]}
+                    />
+                    <View
+                        style={[
+                            styles.selectStyle,
+                            {
+                                paddingHorizontal: 0,
+                                paddingLeft: 4,
 
-                            borderTopLeftRadius: 0,
-                            borderBottomLeftRadius: 0,
-                            borderLeftWidth: 0,
-                        },
-                    ]}>
-                    <Picker
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            fontFamily: 'Roboto_400Regular',
-                            color: PRIMARY_COLOR,
-                        }}
-                        selectedValue={weightUnit}
-                        onValueChange={(itemValue, itemIndex) => setWeightUnit(itemValue)}>
-                        <Picker.Item label='Kg' value='kg' />
-                        <Picker.Item label='Lb' value='lb' />
-                    </Picker>
+                                borderTopLeftRadius: 0,
+                                borderBottomLeftRadius: 0,
+                                borderLeftWidth: 0,
+                            },
+                        ]}>
+                        <ModalSelector
+                            data={weightUnitData}
+                            initValue={initialWeightUnit}
+                            style={{
+                                // borderRadius: 10,
+                                // borderColor: PRIMARY_COLOR,
+                                // borderWidth: 2,
+                                width: '100%',
+                            }}
+                            initValueTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectStyle={{
+                                borderWidth: 0,
+                                width: '100%',
+                            }}
+                            touchableStyle={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                            }}
+                            onChange={(option) => {
+                                setHeightUnit(option.value);
+                            }}
+                        />
+                    </View>
                 </View>
-            </View>
+            ) : (
+                <View style={styles.groupFields}>
+                    <Text style={styles.groupFieldName}>Weight </Text>
+                    <TextInput
+                        keyboardType='numeric'
+                        value={weight.toString()}
+                        onChangeText={(val) => {
+                            setWeight(val);
+                            validateWeight(val);
+                        }}
+                        onEndEditing={(e) => validateWeight(e.nativeEvent.text)}
+                        style={[
+                            styles.txtValueStyle,
+                            {
+                                borderTopRightRadius: 0,
+                                borderBottomRightRadius: 0,
+                                borderRightWidth: 0,
+                            },
+                        ]}
+                    />
+                    <View
+                        style={[
+                            styles.selectStyle,
+                            {
+                                paddingHorizontal: 0,
+                                paddingLeft: 4,
+
+                                borderTopLeftRadius: 0,
+                                borderBottomLeftRadius: 0,
+                                borderLeftWidth: 0,
+                            },
+                        ]}>
+                        <Picker
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                fontFamily: 'Roboto_400Regular',
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectedValue={weightUnit}
+                            onValueChange={(itemValue, itemIndex) => setWeightUnit(itemValue)}>
+                            <Picker.Item label='Kg' value='kg' />
+                            <Picker.Item label='Lb' value='lb' />
+                        </Picker>
+                    </View>
+                </View>
+            )}
+
             {weightError}
-            <View style={[styles.groupFields, { marginBottom: 0 }]}>
-                <Text style={styles.groupFieldName}>Activity Level </Text>
-                <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
-                    <Picker
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            fontFamily: 'Roboto_400Regular',
-                            color: PRIMARY_COLOR,
-                        }}
-                        selectedValue={activityLevel.toString()}
-                        onValueChange={(itemValue, itemIndex) => setActivityLevel(itemValue)}>
-                        <Picker.Item label='Little or no exercise' value='1.2' />
-                        <Picker.Item label='1-2 days/week' value='1.4' />
-                        <Picker.Item label='2-3 days/week' value='1.6' />
-                        <Picker.Item label='4-5 days/week' value='1.75' />
-                        <Picker.Item label='6-7 days/week' value='2' />
-                        <Picker.Item label='Professional athlete' value='2.3' />
-                    </Picker>
+            {Platform.OS == 'ios' ? (
+                <View style={[styles.groupFields, { marginBottom: 0 }]}>
+                    <Text style={styles.groupFieldName}>Activity Level </Text>
+                    <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
+                        <ModalSelector
+                            data={activityLevelData}
+                            initValue={inittialActivityLevel}
+                            style={{
+                                // borderRadius: 10,
+                                // borderColor: PRIMARY_COLOR,
+                                // borderWidth: 2,
+                                width: '100%',
+                            }}
+                            initValueTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectStyle={{
+                                borderWidth: 0,
+                                width: '100%',
+                            }}
+                            touchableStyle={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                            }}
+                            onChange={(option) => {
+                                setActivityLevel(option.value);
+                            }}
+                        />
+                    </View>
                 </View>
-            </View>
+            ) : (
+                <View style={[styles.groupFields, { marginBottom: 0 }]}>
+                    <Text style={styles.groupFieldName}>Activity Level </Text>
+                    <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
+                        <Picker
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                fontFamily: 'Roboto_400Regular',
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectedValue={activityLevel.toString()}
+                            onValueChange={(itemValue, itemIndex) => setActivityLevel(itemValue)}>
+                            <Picker.Item label='Little or no exercise' value='1.2' />
+                            <Picker.Item label='1-2 days/week' value='1.4' />
+                            <Picker.Item label='2-3 days/week' value='1.6' />
+                            <Picker.Item label='4-5 days/week' value='1.75' />
+                            <Picker.Item label='6-7 days/week' value='2' />
+                            <Picker.Item label='Professional athlete' value='2.3' />
+                        </Picker>
+                    </View>
+                </View>
+            )}
         </View>
     );
 };
@@ -341,6 +688,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginBottom: 4,
     },
+    groupFieldsNew: {},
 });
 
 const mapStateToProps = (state) => ({

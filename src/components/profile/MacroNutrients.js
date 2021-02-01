@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Platform } from 'react-native';
+import ModalSelector from 'react-native-modal-selector';
 
 // Colors
 import { PRIMARY_COLOR, RED } from '../../config/theme';
@@ -11,193 +12,277 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CustomMacroNutrients from './CustomMacroNutrients';
 
 const MacroNutrients = ({
-  profile: { profile },
-  macroNutrients,
-  setMacroNutriens,
-  dietPlan,
-  setDietPlan,
+    profile: { profile },
+    macroNutrients,
+    setMacroNutriens,
+    dietPlan,
+    setDietPlan,
 }) => {
-  const [showCustom, setShowCustom] = useState(false);
+    const [showCustom, setShowCustom] = useState(false);
 
-  // Custom MacroNutrient fields
-  const [carbs, setCarbs] = useState(macroNutrients.carbs);
-  const [protein, setProtein] = useState(macroNutrients.protein);
-  const [fat, setFat] = useState(macroNutrients.fat);
+    // Custom MacroNutrient fields
+    const [carbs, setCarbs] = useState(macroNutrients.carbs);
+    const [protein, setProtein] = useState(macroNutrients.protein);
+    const [fat, setFat] = useState(macroNutrients.fat);
 
-  useEffect(() => {
-    if (profile != null) {
-      if (profile.macroNutrients != null) setMacroNutriens(profile.macroNutrients);
-      if (profile.dietPlan != null) setDietPlan(profile.dietPlan);
+    useEffect(() => {
+        if (profile != null) {
+            if (profile.macroNutrients != null) setMacroNutriens(profile.macroNutrients);
+            if (profile.dietPlan != null) setDietPlan(profile.dietPlan);
 
-      if (profile.dietPlan == 'custom') {
-        setShowCustom(true);
-      }
+            if (profile.dietPlan == 'custom') {
+                setShowCustom(true);
+            }
+        }
+    }, []);
+
+    let customMacroNutriens = {
+        carbs,
+        protein,
+        fat,
+    };
+
+    const setMacroNutrientsValues = (val) => {
+        let macroNutrientsValues;
+        switch (val) {
+            case 'standard':
+                setShowCustom(false);
+                macroNutrientsValues = {
+                    carbs: 50,
+                    protein: 25,
+                    fat: 25,
+                };
+                break;
+            case 'muscleGain':
+                setShowCustom(false);
+                macroNutrientsValues = {
+                    carbs: 30,
+                    protein: 40,
+                    fat: 30,
+                };
+                break;
+            case 'weightLoss':
+                setShowCustom(false);
+                macroNutrientsValues = {
+                    carbs: 40,
+                    protein: 35,
+                    fat: 25,
+                };
+                break;
+            case 'keto':
+                setShowCustom(false);
+                macroNutrientsValues = {
+                    carbs: 10,
+                    protein: 30,
+                    fat: 60,
+                };
+
+                break;
+            case 'custom':
+                setShowCustom(true);
+                macroNutrientsValues = customMacroNutriens;
+
+                break;
+            default:
+                setShowCustom(false);
+                macroNutrientsValues = {
+                    carbs: 50,
+                    protein: 25,
+                    fat: 25,
+                };
+                break;
+        }
+        setMacroNutriens(macroNutrientsValues);
+    };
+
+    let initialDietPlan;
+    switch (dietPlan) {
+        case 'standard':
+            initialDietPlan = 'Standard';
+            break;
+        case 'muscleGain':
+            initialDietPlan = 'Muscle Gain';
+            break;
+        case 'weightLoss':
+            initialDietPlan = 'Weight Loss';
+            break;
+        case 'keto':
+            initialDietPlan = 'Keto';
+            break;
+        case 'custom':
+            initialDietPlan = 'Custom';
+            break;
     }
-  }, []);
+    const dietPlanData = [
+        {
+            key: 1,
+            label: 'Standard',
+            value: 'standard',
+        },
+        {
+            key: 2,
+            label: 'Muscle Gain',
+            value: 'muscleGain',
+        },
+        {
+            key: 3,
+            label: 'Weight Loss',
+            value: 'weightLoss',
+        },
+        {
+            key: 4,
+            label: 'Keto',
+            value: 'keto',
+        },
+        {
+            key: 5,
+            label: 'Custom',
+            value: 'custom',
+        },
+    ];
 
-  let customMacroNutriens = {
-    carbs,
-    protein,
-    fat,
-  };
+    return (
+        <View style={styles.groupContainer}>
+            <View style={styles.subTitleContainer}>
+                <MaterialCommunityIcons style={styles.subTitleIcon} name='silverware-fork-knife' />
+                <Text style={styles.subTitle}>Macro Nutrients</Text>
+            </View>
+            {Platform.OS == 'ios' ? (
+                <View style={styles.groupFields}>
+                    <Text style={styles.groupFieldName}>Diet Plan </Text>
+                    <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
+                        <ModalSelector
+                            data={dietPlanData}
+                            initValue={initialDietPlan}
+                            style={{
+                                // borderRadius: 10,
+                                // borderColor: PRIMARY_COLOR,
+                                // borderWidth: 2,
+                                width: '100%',
+                            }}
+                            initValueTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectTextStyle={{
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectStyle={{
+                                borderWidth: 0,
+                                width: '100%',
+                            }}
+                            touchableStyle={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                            }}
+                            onChange={(option) => {
+                                setDietPlan(option.value);
+                                setMacroNutrientsValues(option.value);
+                            }}
+                        />
+                    </View>
+                </View>
+            ) : (
+                <View style={styles.groupFields}>
+                    <Text style={styles.groupFieldName}>Diet Plan </Text>
+                    <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
+                        <Picker
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                fontFamily: 'Roboto_400Regular',
+                                color: PRIMARY_COLOR,
+                            }}
+                            selectedValue={dietPlan}
+                            onValueChange={(itemValue, itemIndex) => {
+                                setDietPlan(itemValue);
+                                setMacroNutrientsValues(itemValue);
+                            }}>
+                            <Picker.Item label='Standard' value='standard' />
+                            <Picker.Item label='Muscle Gain' value='muscleGain' />
+                            <Picker.Item label='Weight Loss' value='weightLoss' />
+                            <Picker.Item label='Keto' value='keto' />
+                            <Picker.Item label='Custom' value='custom' />
+                        </Picker>
+                    </View>
+                </View>
+            )}
 
-  const setMacroNutrientsValues = (val) => {
-    let macroNutrientsValues;
-    switch (val) {
-      case 'standard':
-        setShowCustom(false);
-        macroNutrientsValues = {
-          carbs: 50,
-          protein: 25,
-          fat: 25,
-        };
-        break;
-      case 'muscleGain':
-        setShowCustom(false);
-        macroNutrientsValues = {
-          carbs: 30,
-          protein: 40,
-          fat: 30,
-        };
-        break;
-      case 'weightLoss':
-        setShowCustom(false);
-        macroNutrientsValues = {
-          carbs: 40,
-          protein: 35,
-          fat: 25,
-        };
-        break;
-      case 'keto':
-        setShowCustom(false);
-        macroNutrientsValues = {
-          carbs: 10,
-          protein: 30,
-          fat: 60,
-        };
-
-        break;
-      case 'custom':
-        setShowCustom(true);
-        macroNutrientsValues = customMacroNutriens;
-
-        break;
-      default:
-        setShowCustom(false);
-        macroNutrientsValues = {
-          carbs: 50,
-          protein: 25,
-          fat: 25,
-        };
-        break;
-    }
-    setMacroNutriens(macroNutrientsValues);
-  };
-
-  return (
-    <View style={styles.groupContainer}>
-      <View style={styles.subTitleContainer}>
-        <MaterialCommunityIcons style={styles.subTitleIcon} name='silverware-fork-knife' />
-        <Text style={styles.subTitle}>Macro Nutrients</Text>
-      </View>
-      <View style={styles.groupFields}>
-        <Text style={styles.groupFieldName}>Diet Plan </Text>
-        <View style={[styles.groupFieldData, { paddingHorizontal: 0, paddingLeft: 0 }]}>
-          <Picker
-            style={{
-              width: '100%',
-              height: '100%',
-              fontFamily: 'Roboto_400Regular',
-              color: PRIMARY_COLOR,
-            }}
-            selectedValue={dietPlan}
-            onValueChange={(itemValue, itemIndex) => {
-              setDietPlan(itemValue);
-              setMacroNutrientsValues(itemValue);
-            }}>
-            <Picker.Item label='Standard' value='standard' />
-            <Picker.Item label='Muscle Gain' value='muscleGain' />
-            <Picker.Item label='Weight Loss' value='weightLoss' />
-            <Picker.Item label='Keto' value='keto' />
-            <Picker.Item label='Custom' value='custom' />
-          </Picker>
+            {showCustom ? (
+                <CustomMacroNutrients
+                    carbs={carbs}
+                    setCarbs={setCarbs}
+                    protein={protein}
+                    setProtein={setProtein}
+                    fat={fat}
+                    setFat={setFat}
+                    setMacroNutrientsValues={() => setMacroNutrientsValues('custom')}
+                />
+            ) : null}
         </View>
-      </View>
-      {showCustom ? (
-        <CustomMacroNutrients
-          carbs={carbs}
-          setCarbs={setCarbs}
-          protein={protein}
-          setProtein={setProtein}
-          fat={fat}
-          setFat={setFat}
-          setMacroNutrientsValues={() => setMacroNutrientsValues('custom')}
-        />
-      ) : null}
-    </View>
-  );
+    );
 };
 const styles = StyleSheet.create({
-  groupContainer: {
-    borderColor: PRIMARY_COLOR,
-    borderWidth: 2,
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    marginBottom: 20,
-  },
-  subTitleIcon: {
-    fontSize: 24,
-    color: PRIMARY_COLOR,
-    marginRight: 4,
-  },
-  subTitleContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  subTitle: {
-    fontSize: 20,
-    fontFamily: 'Roboto_500Medium',
-    color: PRIMARY_COLOR,
-  },
-  groupFields: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  groupFieldName: {
-    width: '40%',
-    color: PRIMARY_COLOR,
-    fontFamily: 'Roboto_400Regular',
-    fontSize: 16,
-  },
-  groupFieldData: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    borderRadius: 10,
-    borderColor: PRIMARY_COLOR,
-    borderWidth: 2,
-    backgroundColor: 'white',
-    color: PRIMARY_COLOR,
-    paddingHorizontal: 10,
-    fontFamily: 'Roboto_400Regular',
-  },
-  errorStyle: {
-    color: RED,
-    fontSize: 12,
-    marginBottom: 4,
-  },
+    groupContainer: {
+        borderColor: PRIMARY_COLOR,
+        borderWidth: 2,
+        borderRadius: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        marginBottom: 20,
+    },
+    subTitleIcon: {
+        fontSize: 24,
+        color: PRIMARY_COLOR,
+        marginRight: 4,
+    },
+    subTitleContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+    },
+    subTitle: {
+        fontSize: 20,
+        fontFamily: 'Roboto_500Medium',
+        color: PRIMARY_COLOR,
+    },
+    groupFields: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    groupFieldName: {
+        width: '40%',
+        color: PRIMARY_COLOR,
+        fontFamily: 'Roboto_400Regular',
+        fontSize: 16,
+    },
+    groupFieldData: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 40,
+        borderRadius: 10,
+        borderColor: PRIMARY_COLOR,
+        borderWidth: 2,
+        backgroundColor: 'white',
+        color: PRIMARY_COLOR,
+        paddingHorizontal: 10,
+        fontFamily: 'Roboto_400Regular',
+    },
+    errorStyle: {
+        color: RED,
+        fontSize: 12,
+        marginBottom: 4,
+    },
 });
 
 const mapStateToProps = (state) => ({
-  profile: state.profile,
+    profile: state.profile,
 });
 
 export default connect(mapStateToProps, {})(MacroNutrients);
