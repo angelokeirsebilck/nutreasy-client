@@ -48,6 +48,7 @@
         "svg"
       ]
     },
-    "description": ""
+    "description": "Nutreasy lets you keep track of your food macros.",
+    "githubUrl": "https://github.com/angelokeirsebilck/nutreasy-client"
   }
 }

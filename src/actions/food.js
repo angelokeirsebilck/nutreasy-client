@@ -130,44 +130,21 @@ export const addSearchFood = (data) => async (dispatch) => {
     }
 };
 
-// export const searchFood = (searchString) => async (dispatch) => {
-//     const fatSecretToken = await AsyncStorage.getItem('fatToken');
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     };
-
-//     const data = {
-//         searchString,
-//         token: fatSecretToken,
-//     };
-
-//     try {
-//         const res = await axios.post(`${API_URL}/api/food/searchFood`, data, config);
-
-//         dispatch({
-//             type: GET_SEARCH_FOOD,
-//             payload: res.data,
-//         });
-//     } catch (error) {
-//         console.log(error.response);
-//     }
-// };
-
 export const searchFood = (searchString) => async (dispatch) => {
     const fatSecretToken = await AsyncStorage.getItem('fatToken');
     const config = {
         headers: {
-            Authorization: `Bearer ${fatSecretToken}`,
+            'Content-Type': 'application/json',
         },
     };
 
+    const data = {
+        searchString,
+        token: fatSecretToken,
+    };
+
     try {
-        const res = await fatSecretApi.get(
-            `?method=foods.search&search_expression=${searchString}&format=json`,
-            config
-        );
+        const res = await axios.post(`${API_URL}/api/food/searchFood`, data, config);
 
         dispatch({
             type: GET_SEARCH_FOOD,
@@ -178,47 +155,45 @@ export const searchFood = (searchString) => async (dispatch) => {
     }
 };
 
-// export const searchFoodById = (id) => async (dispatch) => {
+// export const searchFood = (searchString) => async (dispatch) => {
 //     const fatSecretToken = await AsyncStorage.getItem('fatToken');
 //     const config = {
 //         headers: {
-//             'Content-Type': 'application/json',
+//             Authorization: `Bearer ${fatSecretToken}`,
 //         },
 //     };
 
-//     const data = {
-//         id,
-//         token: fatSecretToken,
-//     };
-
 //     try {
-//         const res = await axios.post(`${API_URL}/api/food/searchFoodById`, data, config);
+//         const res = await fatSecretApi.get(
+//             `?method=foods.search&search_expression=${searchString}&format=json`,
+//             config
+//         );
 
-//         const servings = res.data.food.servings.serving;
-//         let filtered;
-//         if (servings.length > 0) {
-//             filtered = servings.filter((serving) => serving.measurement_description == 'g');
-//             return filtered[0];
-//         }
-
-//         return servings;
+//         dispatch({
+//             type: GET_SEARCH_FOOD,
+//             payload: res.data,
+//         });
 //     } catch (error) {
-//         console.log(error);
+//         console.log(error.response);
 //     }
 // };
 
 export const searchFoodById = (id) => async (dispatch) => {
     const fatSecretToken = await AsyncStorage.getItem('fatToken');
-
     const config = {
         headers: {
-            Authorization: `Bearer ${fatSecretToken}`,
+            'Content-Type': 'application/json',
         },
     };
 
+    const data = {
+        id,
+        token: fatSecretToken,
+    };
+
     try {
-        const res = await fatSecretApi.get(`?method=food.get.v2&food_id=${id}&format=json`, config);
-        // console.log(res.data.food);
+        const res = await axios.post(`${API_URL}/api/food/searchFoodById`, data, config);
+
         const servings = res.data.food.servings.serving;
         let filtered;
         if (servings.length > 0) {
@@ -231,3 +206,28 @@ export const searchFoodById = (id) => async (dispatch) => {
         console.log(error);
     }
 };
+
+// export const searchFoodById = (id) => async (dispatch) => {
+//     const fatSecretToken = await AsyncStorage.getItem('fatToken');
+
+//     const config = {
+//         headers: {
+//             Authorization: `Bearer ${fatSecretToken}`,
+//         },
+//     };
+
+//     try {
+//         const res = await fatSecretApi.get(`?method=food.get.v2&food_id=${id}&format=json`, config);
+//         // console.log(res.data.food);
+//         const servings = res.data.food.servings.serving;
+//         let filtered;
+//         if (servings.length > 0) {
+//             filtered = servings.filter((serving) => serving.measurement_description == 'g');
+//             return filtered[0];
+//         }
+
+//         return servings;
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
